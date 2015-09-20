@@ -28,7 +28,13 @@ public final class Falcon {
 
   //region Public API
 
-  public static File takeScreenshot(Activity activity, final File toFile) {
+  /**
+   * Takes screenshot of provided activity and saves it to provided file.
+   *
+   * @param activity Activity of which the screenshot will be taken.
+   * @param toFile   File where the screenshot will be saved
+   */
+  public static void takeScreenshot(Activity activity, final File toFile) {
     if (activity == null) {
       throw new IllegalArgumentException("Parameter activity cannot be null.");
     }
@@ -56,9 +62,14 @@ public final class Falcon {
     }
 
     Log.d(TAG, "Screenshot captured to " + toFile.getAbsolutePath());
-    return toFile;
   }
 
+  /**
+   * Takes screenshot of provided activity and puts it into bitmap.
+   *
+   * @param activity Activity of which the screenshot will be taken.
+   * @return Bitmap of what is displayed in activity.
+   */
   public static Bitmap takeScreenshotBitmap(Activity activity) {
     if (activity == null) {
       throw new IllegalArgumentException("Parameter activity cannot be null.");
