@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 
-version = '0.2.0'
+version = '0.2.1'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -45,5 +45,5 @@ ext {
     allLicenses = ["Apache-2.0"]
 }
 
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+apply from: rootDir.absolutePath + '/gradle/installv1.gradle'
+apply from: rootDir.absolutePath + '/gradle/bintrayv1.gradle'
