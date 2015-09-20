@@ -19,7 +19,7 @@ import java.util.concurrent.CountDownLatch;
 import static android.graphics.Bitmap.Config.ARGB_8888;
 import static android.view.WindowManager.LayoutParams.FLAG_DIM_BEHIND;
 
-public class Falcon {
+public final class Falcon {
   //region Constants
 
   private static final String TAG = "Falcon";
@@ -192,6 +192,14 @@ public class Falcon {
 
     field.setAccessible(true);
     return field.get(target);
+  }
+
+  //endregion
+
+  //region Constructors
+
+  // No instances
+  private Falcon() {
   }
 
   //endregion
