@@ -15,6 +15,10 @@ import butterknife.OnClick;
 import com.jraska.falcon.Falcon;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class SampleActivity extends AppCompatActivity {
 
@@ -87,7 +91,9 @@ public class SampleActivity extends AppCompatActivity {
       throw new RuntimeException(e);
     }
 
-    String screenshotName = System.currentTimeMillis() + ".png";
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss.SSS", Locale.getDefault());
+
+    String screenshotName = dateFormat.format(new Date()) + ".png";
     return new File(screenshotDirectory, screenshotName);
   }
 
