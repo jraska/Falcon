@@ -90,4 +90,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="show_snack">Show Snack</string>
+    <string name="show_toast">Show Toast</string>
+    <string name="show_dialog">Show Dialog</string>
 </resources>
