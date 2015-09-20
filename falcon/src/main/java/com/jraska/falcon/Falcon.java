@@ -30,9 +30,11 @@ public final class Falcon {
 
   /**
    * Takes screenshot of provided activity and saves it to provided file.
+   * File content will be overwritten if there is already some content.
    *
    * @param activity Activity of which the screenshot will be taken.
-   * @param toFile   File where the screenshot will be saved
+   * @param toFile   File where the screenshot will be saved.
+   *                 Its content will be overwritten if some
    */
   public static void takeScreenshot(Activity activity, final File toFile) {
     if (activity == null) {
