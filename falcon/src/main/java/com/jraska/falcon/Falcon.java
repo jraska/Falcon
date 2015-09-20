@@ -160,7 +160,12 @@ public final class Falcon {
   private static List<ViewRootData> getRootViews(Activity activity) {
     List<ViewRootData> rootViews = new ArrayList<>();
 
-    Object globalWindowManager = getFieldValue("mGlobal", activity.getWindowManager());
+    Object globalWindowManager;
+    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+      globalWindowManager = getFieldValue("mWindowManager", activity.getWindowManager());
+    } else {
+      globalWindowManager = getFieldValue("mGlobal", activity.getWindowManager());
+    }
     Object rootObjects = getFieldValue("mRoots", globalWindowManager);
     Object paramsObject = getFieldValue("mParams", globalWindowManager);
 
@@ -181,7 +186,13 @@ public final class Falcon {
     for (int i = 0; i < roots.length; i++) {
       Object root = roots[i];
 
-      Rect area = (Rect) getFieldValue("mWinFrame", root);
+      Object attachInfo = getFieldValue("mAttachInfo", root);
+      int top = (int) getFieldValue("mWindowTop", attachInfo);
+      int left = (int) getFieldValue("mWindowLeft", attachInfo);
+
+      Rect winFrame = (Rect) getFieldValue("mWinFrame", root);
+      Rect area = new Rect(left, top, left + winFrame.width(), top + winFrame.height());
+
       View view = (View) getFieldValue("mView", root);
       rootViews.add(new ViewRootData(view, area, params[i]));
     }
@@ -200,11 +211,25 @@ public final class Falcon {
 
   private static Object getFieldValueUnchecked(String fieldName, Object target)
       throws NoSuchFieldException, IllegalAccessException {
-    // No recursion to upper classes all fields we need are directly declared by provided classes
-    Field field = target.getClass().getDeclaredField(fieldName);
+    Field field = findField(fieldName, target.getClass());
 
     field.setAccessible(true);
     return field.get(target);
+  }
+
+  private static Field findField(String name, Class clazz) throws NoSuchFieldException {
+    Class currentClass = clazz;
+    while (currentClass != Object.class) {
+      for (Field field : currentClass.getDeclaredFields()) {
+        if (name.equals(field.getName())) {
+          return field;
+        }
+      }
+
+      currentClass = clazz.getSuperclass();
+    }
+
+    throw new NoSuchFieldException("Field " + name + " not found for class " + clazz);
   }
 
   //endregion
