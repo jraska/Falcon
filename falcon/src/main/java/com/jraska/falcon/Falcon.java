@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
+import static android.graphics.Bitmap.Config.ARGB_8888;
+import static android.view.WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+
 public class Falcon {
   //region Constants
 
@@ -26,26 +29,63 @@ public class Falcon {
   //region Public API
 
   public static File takeScreenshot(Activity activity, final File toFile) {
-    Bitmap bitmap = takeScreenshotBitmap(activity);
+    if (activity == null) {
+      throw new IllegalArgumentException("Parameter activity cannot be null.");
+    }
 
+    if (toFile == null) {
+      throw new IllegalArgumentException("Parameter toFile cannot be null.");
+    }
+
+    Bitmap bitmap = null;
     try {
+      bitmap = takeBitmapUnchecked(activity);
       writeBitmap(bitmap, toFile);
     }
-    catch (IOException e) {
-      throw new RuntimeException(e); // TODO(20.9.2015): Error handling
+    catch (Exception e) {
+      String message = "Unable to take screenshot to file " + toFile.getAbsolutePath()
+          + " of activity " + activity.getClass().getName();
+
+      Log.e(TAG, message, e);
+      throw new RuntimeException(message, e);
     }
     finally {
-      bitmap.recycle();
+      if (bitmap != null) {
+        bitmap.recycle();
+      }
     }
 
+    Log.d(TAG, "Screenshot captured to " + toFile.getAbsolutePath());
     return toFile;
   }
 
   public static Bitmap takeScreenshotBitmap(Activity activity) {
+    if (activity == null) {
+      throw new IllegalArgumentException("Parameter activity cannot be null.");
+    }
+
+    try {
+      return takeBitmapUnchecked(activity);
+    }
+    catch (Exception e) {
+      String message = "Unable to take screenshot to bitmap of activity "
+          + activity.getClass().getName();
+
+      Log.e(TAG, message, e);
+      throw new RuntimeException(message, e);
+    }
+  }
+
+
+  //endregion
+
+  //region Methods
+
+  private static Bitmap takeBitmapUnchecked(Activity activity) throws InterruptedException {
     final List<ViewRootData> viewRoots = getRootViews(activity);
     View main = activity.getWindow().getDecorView();
 
-    final Bitmap bitmap = Bitmap.createBitmap(main.getWidth(), main.getHeight(), Bitmap.Config.ARGB_8888);
+    final Bitmap bitmap = Bitmap.createBitmap(main.getWidth(), main.getHeight(), ARGB_8888);
 
     // We need to do it in main thread
     if (Looper.myLooper() == Looper.getMainLooper()) {
@@ -63,21 +103,12 @@ public class Falcon {
           }
         }
       });
-      try {
-        latch.await();
-      }
-      catch (InterruptedException e) {
-        Log.e(TAG, "Unable to get screenshot", e);
-        throw new RuntimeException(e);
-      }
+
+      latch.await();
     }
 
     return bitmap;
   }
-
-  //endregion
-
-  //region Methods
 
   private static void drawRootsToBitmap(List<ViewRootData> viewRoots, Bitmap bitmap) {
     for (ViewRootData rootData : viewRoots) {
@@ -87,9 +118,11 @@ public class Falcon {
 
   private static void drawRootToBitmap(ViewRootData config, Bitmap bitmap) {
     // now only dim supported
-    if ((config._layoutParams.flags & LayoutParams.FLAG_DIM_BEHIND) == LayoutParams.FLAG_DIM_BEHIND) {
+    if ((config._layoutParams.flags & FLAG_DIM_BEHIND) == FLAG_DIM_BEHIND) {
       Canvas dimCanvas = new Canvas(bitmap);
-      dimCanvas.drawARGB((int) (255 * config._layoutParams.dimAmount), 0, 0, 0);
+
+      int alpha = (int) (255 * config._layoutParams.dimAmount);
+      dimCanvas.drawARGB(alpha, 0, 0, 0);
     }
 
     Canvas canvas = new Canvas(bitmap);
@@ -120,6 +153,8 @@ public class Falcon {
 
     Object[] roots;
     LayoutParams[] params;
+
+    //  There was a change to ArrayList implementation in 4.4
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
       roots = ((List) rootObjects).toArray();
 
@@ -152,7 +187,7 @@ public class Falcon {
 
   private static Object getFieldValueUnchecked(String fieldName, Object target)
       throws NoSuchFieldException, IllegalAccessException {
-    // Here no recursion to upper classes all fields we need are directly declared by provided classes
+    // No recursion to upper classes all fields we need are directly declared by provided classes
     Field field = target.getClass().getDeclaredField(fieldName);
 
     field.setAccessible(true);
