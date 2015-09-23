@@ -226,7 +226,7 @@ public final class Falcon {
         }
       }
 
-      currentClass = clazz.getSuperclass();
+      currentClass = currentClass.getSuperclass();
     }
 
     throw new NoSuchFieldException("Field " + name + " not found for class " + clazz);
