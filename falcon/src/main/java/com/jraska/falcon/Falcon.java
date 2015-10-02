@@ -19,6 +19,9 @@ import java.util.concurrent.CountDownLatch;
 import static android.graphics.Bitmap.Config.ARGB_8888;
 import static android.view.WindowManager.LayoutParams.FLAG_DIM_BEHIND;
 
+/**
+ * Utility class to take screenshots of activity screen
+ */
 public final class Falcon {
   //region Constants
 
