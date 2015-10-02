@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.jraska.falcon.FalconSpoon;
+import com.jraska.falcon.Falcon;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -77,8 +77,9 @@ public class SampleActivity extends AppCompatActivity {
   public void takeScreenshot() {
 
     // We are not in Unit test sot teh app
-    File screenshotFile = FalconSpoon.takeScreenshot(this,
-        "TestScreen" + System.currentTimeMillis(), "SampleTestClass", "SampleTestMethod");
+    File screenshotFile = getScreenshotFile();
+
+    Falcon.takeScreenshot(this, screenshotFile);
 
     String message = "Screenshot captured to " + screenshotFile.getAbsolutePath();
     Toast.makeText(this, message, Toast.LENGTH_LONG).show();
