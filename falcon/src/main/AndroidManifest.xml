@@ -2,6 +2,7 @@
     package="com.jraska.falcon">
 
     <application
+        android:fullBackupContent="true"
         android:allowBackup="true"
         android:supportsRtl="true">
 
