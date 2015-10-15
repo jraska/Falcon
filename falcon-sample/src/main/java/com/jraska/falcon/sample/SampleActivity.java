@@ -102,7 +102,15 @@ public class SampleActivity extends AppCompatActivity {
 
   private static File getScreenshotsDirectory(Context context) throws IllegalAccessException {
     String dirName = "screenshots_" + context.getPackageName();
-    File directory = new File(Environment.getExternalStorageDirectory(), dirName);
+
+    File rootDir;
+    if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+      rootDir = Environment.getExternalStorageDirectory();
+    } else {
+      rootDir = context.getDir("screens", MODE_PRIVATE);
+    }
+
+    File directory = new File(rootDir, dirName);
 
     if (!directory.exists()) {
       if (!directory.mkdirs()) {
