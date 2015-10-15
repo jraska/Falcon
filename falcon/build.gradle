@@ -10,6 +10,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionName version
+        versionCode rootProject.ext.versionCode
     }
 
     compileOptions {
