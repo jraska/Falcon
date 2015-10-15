@@ -26,6 +26,7 @@ android {
 
     lintOptions {
         disable 'InvalidPackage'
+        abortOnError true
     }
 
     packagingOptions {
@@ -35,6 +36,7 @@ android {
     defaultConfig {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
 }
 
 dependencies {

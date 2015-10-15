@@ -16,6 +16,10 @@ android {
         sourceCompatibility rootProject.ext.sourceCompatibility
         targetCompatibility rootProject.ext.sourceCompatibility
     }
+
+    lintOptions {
+        abortOnError true
+    }
 }
 
 dependencies {
