@@ -19,6 +19,6 @@ android {
 }
 
 dependencies {
+    compile project(':falcon')
     compile 'com.squareup.spoon:spoon-client:1.2.0'
-    compile 'com.jraska:falcon:0.2.1'
 }
