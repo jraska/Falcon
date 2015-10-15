@@ -25,7 +25,7 @@ android {
     }
 
     lintOptions {
-        disable 'InvalidPackage'
+        disable 'InvalidPackage', 'UnusedAttribute'
         abortOnError true
     }
 

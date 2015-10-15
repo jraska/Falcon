@@ -19,6 +19,7 @@ android {
 
     lintOptions {
         abortOnError true
+        disable 'UnusedAttribute'
     }
 }
 
