@@ -1,10 +1,10 @@
 package com.jraska.falcon.sample;
 
+import android.graphics.Bitmap;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.ActivityInstrumentationTestCase2;
 import com.jraska.falcon.Falcon;
-import com.jraska.falcon.FalconSpoon;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,22 +13,30 @@ import org.junit.runner.RunWith;
 import java.io.File;
 
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
 
 /**
- * Shows usage of {@link Falcon} and {@link FalconSpoon} screenshots
+ * Shows usage of {@link Falcon} screenshots
  */
 @RunWith(AndroidJUnit4.class)
-public class SampleActivityTest extends ActivityInstrumentationTestCase2<SampleActivity> {
+public class FalconTest extends ActivityInstrumentationTestCase2<SampleActivity> {
+  //region Constants
+
+  public static final int SMALLEST_SCREEN_EVER = 100;
+
+  //endregion
+
   //region Fields
 
-  private File _imageFile;
+  private File _screenshotFile;
 
   //endregion
 
   //region Constructors
 
-  public SampleActivityTest() {
+  public FalconTest() {
     super(SampleActivity.class);
   }
 
@@ -43,7 +51,6 @@ public class SampleActivityTest extends ActivityInstrumentationTestCase2<SampleA
 
     injectInstrumentation(InstrumentationRegistry.getInstrumentation());
 
-    // Launches the activity
     getActivity();
   }
 
@@ -51,7 +58,9 @@ public class SampleActivityTest extends ActivityInstrumentationTestCase2<SampleA
   @After
   @Override
   public void tearDown() throws Exception {
-    _imageFile.delete();
+    if (_screenshotFile != null) {
+      _screenshotFile.delete();
+    }
 
     super.tearDown();
   }
@@ -61,16 +70,26 @@ public class SampleActivityTest extends ActivityInstrumentationTestCase2<SampleA
   //region Test methods
 
   @Test
-  public void testSavesFalconFile() throws Exception {
+  public void testTakeScreenshot() throws Exception {
     File newFile = getActivity().getScreenshotFile();
-    _imageFile = newFile;
+    _screenshotFile = newFile;
 
     //check that file does not exist yet
     assertFalse(newFile.exists());
 
     Falcon.takeScreenshot(getActivity(), newFile);
 
-    assertThat(newFile.length(), greaterThan(0L));
+    assertThat(newFile.length(), greaterThan((long) SMALLEST_SCREEN_EVER));
+  }
+
+  @Test
+  public void testTakeScreenshotBitmap() throws Exception {
+    Bitmap bitmap = Falcon.takeScreenshotBitmap(getActivity());
+
+    assertThat(bitmap, not(nullValue()));
+
+    assertThat(bitmap.getWidth(), greaterThan(SMALLEST_SCREEN_EVER));
+    assertThat(bitmap.getHeight(), greaterThan(SMALLEST_SCREEN_EVER));
   }
 
   //endregion
