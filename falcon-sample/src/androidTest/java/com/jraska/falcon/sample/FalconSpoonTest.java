@@ -65,7 +65,7 @@ public class FalconSpoonTest extends ActivityInstrumentationTestCase2<SampleActi
   @Test
   public void testTakeScreenshot() throws Exception {
     String tag = "ExampleScreenshot";
-    _screenshotFile = FalconSpoon.takeScreenshot(getActivity(), tag);
+    _screenshotFile = FalconSpoon.screenshot(getActivity(), tag);
 
     assertThat(_screenshotFile.length(), greaterThan(0L));
     assertThat(_screenshotFile, isBitmap());
@@ -75,7 +75,7 @@ public class FalconSpoonTest extends ActivityInstrumentationTestCase2<SampleActi
   public void testTakeScreenshotWithCustomNames() throws Exception {
     String tag = "ExampleScreenshot";
 
-    _screenshotFile = FalconSpoon.takeScreenshot(getActivity(), tag,
+    _screenshotFile = FalconSpoon.screenshot(getActivity(), tag,
         "FalconSpoonTest", "CustomMethodName");
 
     assertThat(_screenshotFile.length(), greaterThan(0L));

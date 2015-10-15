@@ -10,9 +10,9 @@ import java.io.File;
  * and then write there Spoon screenshot
  */
 public final class FalconSpoon {
-  //region Methods
+  //region Public API
 
-  public static File takeScreenshot(Activity activity, String tag) {
+  public static File screenshot(Activity activity, String tag) {
     File screenshot = Spoon.screenshot(activity, tag);
 
     // File will be overwritten with new screenshot
@@ -21,8 +21,8 @@ public final class FalconSpoon {
     return screenshot;
   }
 
-  public static File takeScreenshot(Activity activity, String tag, String testClassName,
-                                    String testMethodName) {
+  public static File screenshot(Activity activity, String tag, String testClassName,
+                                String testMethodName) {
     File screenshot = Spoon.screenshot(activity, tag, testClassName, testMethodName);
 
     // File will be overwritten with new screenshot
