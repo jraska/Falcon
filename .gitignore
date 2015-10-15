@@ -1,12 +1,8 @@
 # Built application files
 *.apk
-*.ap_
 
 # Files for the Dalvik VM
 *.dex
-
-# Java class files
-*.class
 
 # Generated files
 bin/
@@ -30,7 +26,7 @@ proguard/
 
 *.iml
 
-## Directory-based project format:
+# Directory-based project format:
 .idea/
 # if you remove the above rule, at least ignore the following:
 
