@@ -85,7 +85,7 @@ public class SampleActivity extends AppCompatActivity {
     Toast.makeText(this, message, Toast.LENGTH_LONG).show();
   }
 
-  private File getScreenshotFile() {
+  protected File getScreenshotFile() {
     File screenshotDirectory;
     try {
       screenshotDirectory = getScreenshotsDirectory(getApplicationContext());
