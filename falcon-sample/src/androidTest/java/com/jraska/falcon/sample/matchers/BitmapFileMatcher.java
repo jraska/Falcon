@@ -18,7 +18,14 @@ public class BitmapFileMatcher extends TypeSafeMatcher<File> implements Matcher<
   @Override
   protected boolean matchesSafely(File item) {
     Bitmap bitmap = BitmapFactory.decodeFile(item.getAbsolutePath());
-    return bitmap != null && bitmap.getWidth() > 0 && bitmap.getHeight() > 0;
+
+    boolean matches = bitmap != null && bitmap.getWidth() > 0 && bitmap.getHeight() > 0;
+
+    if (bitmap != null) {
+      bitmap.recycle();
+    }
+
+    return matches;
   }
 
   @Override
