@@ -25,6 +25,7 @@ android {
     }
 
     lintOptions {
+        // TODO: Check pribvate resources lint warning after moving to gradle plugin 1.4+
         disable 'InvalidPackage', 'UnusedAttribute'
         abortOnError true
     }
