@@ -74,7 +74,7 @@ public class FalconSpoonTest extends ActivityInstrumentationTestCase2<SampleActi
     String tag = "ExampleScreenshot";
 
     _screenshotFile = FalconSpoon.takeScreenshot(getActivity(), tag,
-        "FalconSpponTest", "CustomMethodName");
+        "FalconSpoonTest", "CustomMethodName");
 
     assertThat(_screenshotFile.length(), greaterThan(0L));
   }

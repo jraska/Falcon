@@ -4,7 +4,7 @@
  * <p/>
  * Old naming convention with tests starting on test- prefix is used,
  * because unfortunately AndroidJunit4 needs at least one method with this prefix
- * to run other JUnit 4 anotated methods.
+ * to run other JUnit 4 annotated methods.
  * <p/>
  * The code of two tests is similar, but is kept separated for easier understanding.
  */
