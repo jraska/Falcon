@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 
+import static com.jraska.falcon.sample.matchers.BitmapFileMatcher.isBitmap;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.IsNot.not;
@@ -79,7 +80,7 @@ public class FalconTest extends ActivityInstrumentationTestCase2<SampleActivity>
 
     Falcon.takeScreenshot(getActivity(), newFile);
 
-    assertThat(newFile.length(), greaterThan((long) SMALLEST_SCREEN_EVER));
+    assertThat(newFile, isBitmap());
   }
 
   @Test

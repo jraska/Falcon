@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 
+import static com.jraska.falcon.sample.matchers.BitmapFileMatcher.isBitmap;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertThat;
 
@@ -67,6 +68,7 @@ public class FalconSpoonTest extends ActivityInstrumentationTestCase2<SampleActi
     _screenshotFile = FalconSpoon.takeScreenshot(getActivity(), tag);
 
     assertThat(_screenshotFile.length(), greaterThan(0L));
+    assertThat(_screenshotFile, isBitmap());
   }
 
   @Test
@@ -77,6 +79,7 @@ public class FalconSpoonTest extends ActivityInstrumentationTestCase2<SampleActi
         "FalconSpoonTest", "CustomMethodName");
 
     assertThat(_screenshotFile.length(), greaterThan(0L));
+    assertThat(_screenshotFile, isBitmap());
   }
 
   //endregion
