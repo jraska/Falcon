@@ -5,6 +5,8 @@
 
 [![Build Status](https://travis-ci.org/jraska/Falcon.svg?branch=master)](https://travis-ci.org/jraska/Falcon)
 [![Download](https://api.bintray.com/packages/jraska/maven/com.jraska%3Afalcon/images/download.svg) ](https://bintray.com/jraska/maven/com.jraska%3Afalcon/_latestVersion)
+[![License](https://img.shields.io/badge/license-Apache%202.0-green.svg) ](https://github.com/jraska/Falcon/blob/master/LICENSE)
+
 
 ## Usage
 
