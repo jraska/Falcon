@@ -1,7 +1,9 @@
 package com.jraska.falcon.sample;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.Snackbar;
@@ -100,15 +102,21 @@ public class SampleActivity extends AppCompatActivity {
     return new File(screenshotDirectory, screenshotName);
   }
 
+  @SuppressWarnings("deprecation") @SuppressLint("WorldReadableFiles")
   private static File getScreenshotsDirectory(Context context) throws IllegalAccessException {
     String dirName = "screenshots_" + context.getPackageName();
 
     File rootDir;
-    if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-      rootDir = Environment.getExternalStorageDirectory();
+    if (Build.VERSION.SDK_INT >= 21) {
+      rootDir = context.getDir("screenshots", MODE_WORLD_READABLE);
     } else {
-      rootDir = context.getDir("screens", MODE_PRIVATE);
+      if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+        rootDir = Environment.getExternalStorageDirectory();
+      } else {
+        rootDir = context.getDir("screens", MODE_PRIVATE);
+      }
     }
+
 
     File directory = new File(rootDir, dirName);
 
