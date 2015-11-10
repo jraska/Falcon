@@ -1,6 +1,5 @@
 package com.jraska.falcon.sample;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
@@ -9,8 +8,10 @@ import android.os.Environment;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -87,6 +88,18 @@ public class SampleActivity extends AppCompatActivity {
     Toast.makeText(this, message, Toast.LENGTH_LONG).show();
   }
 
+  @OnClick(R.id.show_popup)
+  public void showPopup() {
+    ListPopupWindow listPopupWindow = new ListPopupWindow(this, null);
+
+    String[] data = {"Item 1", "Item 2", "Item 3"};
+    ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, data);
+    listPopupWindow.setAdapter(adapter);
+
+    listPopupWindow.setAnchorView(findViewById(R.id.show_popup));
+    listPopupWindow.show();
+  }
+
   protected File getScreenshotFile() {
     File screenshotDirectory;
     try {
@@ -102,7 +115,6 @@ public class SampleActivity extends AppCompatActivity {
     return new File(screenshotDirectory, screenshotName);
   }
 
-  @SuppressWarnings("deprecation") @SuppressLint("WorldReadableFiles")
   private static File getScreenshotsDirectory(Context context) throws IllegalAccessException {
     String dirName = "screenshots_" + context.getPackageName();
 

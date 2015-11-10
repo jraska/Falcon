@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
-            android:weightSum="3"
+            android:weightSum="4"
             android:orientation="horizontal">
 
             <Button
@@ -41,6 +41,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/show_dialog" />
+
+            <Button
+                android:id="@+id/show_popup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/show_popup" />
         </LinearLayout>
 
 
