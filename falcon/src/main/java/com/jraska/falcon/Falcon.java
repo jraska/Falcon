@@ -38,6 +38,7 @@ public final class Falcon {
    * @param activity Activity of which the screenshot will be taken.
    * @param toFile   File where the screenshot will be saved.
    *                 If there is some content it will be overwritten
+   * @throws UnableToTakeScreenshotException When there is unexpected error during taking screenshot
    */
   public static void takeScreenshot(Activity activity, final File toFile) {
     if (activity == null) {
@@ -74,6 +75,7 @@ public final class Falcon {
    *
    * @param activity Activity of which the screenshot will be taken.
    * @return Bitmap of what is displayed in activity.
+   * @throws UnableToTakeScreenshotException When there is unexpected error during taking screenshot
    */
   public static Bitmap takeScreenshotBitmap(Activity activity) {
     if (activity == null) {
