@@ -37,7 +37,8 @@ public final class Falcon {
    *
    * @param activity Activity of which the screenshot will be taken.
    * @param toFile   File where the screenshot will be saved.
-   *                 Its content will be overwritten if some
+   *                 If there is some content it will be overwritten
+   * @throws UnableToTakeScreenshotException When there is unexpected error during taking screenshot
    */
   public static void takeScreenshot(Activity activity, final File toFile) {
     if (activity == null) {
@@ -58,7 +59,7 @@ public final class Falcon {
           + " of activity " + activity.getClass().getName();
 
       Log.e(TAG, message, e);
-      throw new RuntimeException(message, e);
+      throw new UnableToTakeScreenshotException(message, e);
     }
     finally {
       if (bitmap != null) {
@@ -74,6 +75,7 @@ public final class Falcon {
    *
    * @param activity Activity of which the screenshot will be taken.
    * @return Bitmap of what is displayed in activity.
+   * @throws UnableToTakeScreenshotException When there is unexpected error during taking screenshot
    */
   public static Bitmap takeScreenshotBitmap(Activity activity) {
     if (activity == null) {
@@ -88,7 +90,7 @@ public final class Falcon {
           + activity.getClass().getName();
 
       Log.e(TAG, message, e);
-      throw new RuntimeException(message, e);
+      throw new UnableToTakeScreenshotException(message, e);
     }
   }
 
@@ -246,6 +248,16 @@ public final class Falcon {
   //endregion
 
   //region Nested classes
+
+  /**
+   * Custom exception thrown if there is some exception thrown during
+   * screenshot capturing to enable better client code exception handling.
+   */
+  public static class UnableToTakeScreenshotException extends RuntimeException {
+    private UnableToTakeScreenshotException(String detailMessage, Throwable throwable) {
+      super(detailMessage, throwable);
+    }
+  }
 
   private static class ViewRootData {
     private final View _view;
