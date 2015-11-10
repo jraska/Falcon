@@ -2,7 +2,6 @@ package com.jraska.falcon.sample;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.Snackbar;
@@ -119,16 +118,12 @@ public class SampleActivity extends AppCompatActivity {
     String dirName = "screenshots_" + context.getPackageName();
 
     File rootDir;
-    if (Build.VERSION.SDK_INT >= 21) {
-      rootDir = context.getDir("screenshots", MODE_WORLD_READABLE);
-    } else {
-      if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-        rootDir = Environment.getExternalStorageDirectory();
-      } else {
-        rootDir = context.getDir("screens", MODE_PRIVATE);
-      }
-    }
 
+    if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+      rootDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+    } else {
+      rootDir = context.getDir("screens", MODE_PRIVATE);
+    }
 
     File directory = new File(rootDir, dirName);
 
