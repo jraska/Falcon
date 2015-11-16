@@ -4,9 +4,11 @@
 *Includes dialogs, toasts and all other extra windows in your screenshot.*
 
 [![Build Status](https://travis-ci.org/jraska/Falcon.svg?branch=master)](https://travis-ci.org/jraska/Falcon)
-[![Download](https://api.bintray.com/packages/jraska/maven/com.jraska%3Afalcon/images/download.svg) ](https://bintray.com/jraska/maven/com.jraska%3Afalcon/_latestVersion)
+[![Sample](https://img.shields.io/badge/Download-Sample-blue.svg)](https://drive.google.com/file/d/0B0T1YjC17C-rQ25taHBXSXE2Uzg/view?usp=sharing)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green.svg) ](https://github.com/jraska/Falcon/blob/master/LICENSE)
+[![Download](https://api.bintray.com/packages/jraska/maven/com.jraska%3Afalcon/images/download.svg) ](https://bintray.com/jraska/maven/com.jraska%3Afalcon/_latestVersion)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Falcon-green.svg?style=true)](https://android-arsenal.com/details/1/2793)
+
 
 ## Usage
 
