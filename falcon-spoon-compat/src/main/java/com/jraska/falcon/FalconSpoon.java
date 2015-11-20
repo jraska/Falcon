@@ -7,7 +7,7 @@ import java.io.File;
 
 /**
  * Utility class which simply uses Spoon API to obtain desired file
- * and then write there Spoon screenshot
+ * and then write there Falcon screenshot
  */
 public final class FalconSpoon {
   //region Public API

@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.jraska.falcon.Falcon;
@@ -24,16 +25,22 @@ import java.util.Locale;
 
 public class SampleActivity extends AppCompatActivity {
 
+  //region Fields
+
+  @Bind(R.id.toolbar) Toolbar _toolbar;
+
+  //endregion
+
   //region Activity overrides
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_sample);
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
 
+    setContentView(R.layout.activity_sample);
     ButterKnife.bind(this);
+
+    setSupportActionBar(_toolbar);
   }
 
   //endregion
