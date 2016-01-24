@@ -59,7 +59,7 @@ public final class Falcon {
           + " of activity " + activity.getClass().getName();
 
       Log.e(TAG, message, e);
-      throw new UnableToTakeScreenshotException(message, e);
+      throw UnableToTakeScreenshotException.wrap(message, e);
     }
     finally {
       if (bitmap != null) {
@@ -90,7 +90,7 @@ public final class Falcon {
           + activity.getClass().getName();
 
       Log.e(TAG, message, e);
-      throw new UnableToTakeScreenshotException(message, e);
+      throw UnableToTakeScreenshotException.wrap(message, e);
     }
   }
 
@@ -210,7 +210,7 @@ public final class Falcon {
       return getFieldValueUnchecked(fieldName, target);
     }
     catch (Exception e) {
-      throw new RuntimeException(e);
+      throw UnableToTakeScreenshotException.wrap(e.getMessage(), e);
     }
   }
 
@@ -256,6 +256,18 @@ public final class Falcon {
   public static class UnableToTakeScreenshotException extends RuntimeException {
     private UnableToTakeScreenshotException(String detailMessage, Throwable throwable) {
       super(detailMessage, throwable);
+    }
+
+    /**
+     * Factory method to avoid multiple wrapping. If there is already our exception,
+     * just wrap the cause again
+     */
+    private static UnableToTakeScreenshotException wrap(String message, Exception ex) {
+      if (ex instanceof UnableToTakeScreenshotException) {
+        return new UnableToTakeScreenshotException(message, ex.getCause());
+      }
+
+      return new UnableToTakeScreenshotException(message, ex);
     }
   }
 
