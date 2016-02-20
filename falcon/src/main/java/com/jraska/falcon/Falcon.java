@@ -59,7 +59,7 @@ public final class Falcon {
           + " of activity " + activity.getClass().getName();
 
       Log.e(TAG, message, e);
-      throw UnableToTakeScreenshotException.wrap(message, e);
+      throw new UnableToTakeScreenshotException(message, e);
     }
     finally {
       if (bitmap != null) {
@@ -90,7 +90,7 @@ public final class Falcon {
           + activity.getClass().getName();
 
       Log.e(TAG, message, e);
-      throw UnableToTakeScreenshotException.wrap(message, e);
+      throw new UnableToTakeScreenshotException(message, e);
     }
   }
 
@@ -210,7 +210,7 @@ public final class Falcon {
       return getFieldValueUnchecked(fieldName, target);
     }
     catch (Exception e) {
-      throw UnableToTakeScreenshotException.wrap(e.getMessage(), e);
+      throw new UnableToTakeScreenshotException(e);
     }
   }
 
@@ -254,20 +254,24 @@ public final class Falcon {
    * screenshot capturing to enable better client code exception handling.
    */
   public static class UnableToTakeScreenshotException extends RuntimeException {
-    private UnableToTakeScreenshotException(String detailMessage, Throwable throwable) {
-      super(detailMessage, throwable);
+    private UnableToTakeScreenshotException(String detailMessage, Exception exception) {
+      super(detailMessage, extractException(exception));
+    }
+
+    private UnableToTakeScreenshotException(Exception ex) {
+      super(extractException(ex));
     }
 
     /**
-     * Factory method to avoid multiple wrapping. If there is already our exception,
+     * Method to avoid multiple wrapping. If there is already our exception,
      * just wrap the cause again
      */
-    private static UnableToTakeScreenshotException wrap(String message, Exception ex) {
+    private static Throwable extractException(Exception ex) {
       if (ex instanceof UnableToTakeScreenshotException) {
-        return new UnableToTakeScreenshotException(message, ex.getCause());
+        return ex.getCause();
       }
 
-      return new UnableToTakeScreenshotException(message, ex);
+      return ex;
     }
   }
 
