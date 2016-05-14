@@ -13,7 +13,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,6 +49,16 @@
                 android:text="@string/show_popup" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/countdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:textColor="@color/mainText"
+            android:textSize="@dimen/text_main"
+            android:gravity="center"
+            tools:text="Screenshot in 3"/>
 
         <TextView
             android:layout_width="wrap_content"

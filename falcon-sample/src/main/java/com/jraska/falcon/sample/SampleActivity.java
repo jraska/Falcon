@@ -4,13 +4,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Looper;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,12 +26,19 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class SampleActivity extends AppCompatActivity {
 
   //region Fields
 
   @Bind(R.id.toolbar) Toolbar _toolbar;
+  @Bind(R.id.countdown) TextView _countdownText;
+
+  private int _remainingSeconds;
+  private ScheduledExecutorService _executorService = Executors.newSingleThreadScheduledExecutor();
 
   //endregion
 
@@ -83,9 +94,55 @@ public class SampleActivity extends AppCompatActivity {
   }
 
   @OnClick(R.id.fab_screenshot)
-  public void takeScreenshot() {
+  public void startScreenshotCountDown() {
+    if (_remainingSeconds > 0) {
+      return;
+    }
 
-    // We are not in Unit test sot teh app
+    _remainingSeconds = 3;
+    updateRemainingSeconds();
+
+    Runnable counterCommand = new Runnable() {
+      @Override public void run() {
+        if (Looper.getMainLooper() != Looper.myLooper()) {
+          runOnUiThread(this);
+          return;
+        }
+
+        _remainingSeconds--;
+        updateRemainingSeconds();
+
+        if (_remainingSeconds > 0) {
+          scheduleInSecond(this);
+        } else {
+          // post to see update of screen before screenshot freezes screen
+          _countdownText.post(new Runnable() {
+            @Override public void run() {
+              takeScreenshot();
+            }
+          });
+        }
+      }
+    };
+
+    scheduleInSecond(counterCommand);
+  }
+
+  private void scheduleInSecond(Runnable command) {
+    _executorService.schedule(command, 1, TimeUnit.SECONDS);
+  }
+
+  private void updateRemainingSeconds() {
+    if (_remainingSeconds <= 0) {
+      _countdownText.setVisibility(View.GONE);
+    } else {
+      _countdownText.setVisibility(View.VISIBLE);
+      String countDownText = getString(R.string.screenshot_in, _remainingSeconds);
+      _countdownText.setText(countDownText);
+    }
+  }
+
+  public void takeScreenshot() {
     File screenshotFile = getScreenshotFile();
 
     Falcon.takeScreenshot(this, screenshotFile);
