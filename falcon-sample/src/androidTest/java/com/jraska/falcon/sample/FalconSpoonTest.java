@@ -38,10 +38,7 @@ public class FalconSpoonTest extends ActivityInstrumentationTestCase2<SampleActi
   //region Setup Methods
 
   @Before
-  @Override
-  public void setUp() throws Exception {
-    super.setUp();
-
+  public void before() throws Exception {
     injectInstrumentation(InstrumentationRegistry.getInstrumentation());
 
     getActivity();
@@ -49,13 +46,10 @@ public class FalconSpoonTest extends ActivityInstrumentationTestCase2<SampleActi
 
   @SuppressWarnings("ResultOfMethodCallIgnored")
   @After
-  @Override
-  public void tearDown() throws Exception {
+  public void after() throws Exception {
     if (_screenshotFile != null) {
       _screenshotFile.delete();
     }
-
-    super.tearDown();
   }
 
   //endregion
