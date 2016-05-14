@@ -7,7 +7,6 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.ActivityInstrumentationTestCase2;
 import com.jraska.falcon.FalconSpoon;
-import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +20,8 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
 public class EspressoSpoonTest extends ActivityInstrumentationTestCase2<SampleActivity> {
@@ -39,7 +40,7 @@ public class EspressoSpoonTest extends ActivityInstrumentationTestCase2<SampleAc
   @After
   public void after() throws Exception {
     for (File screenshot : takenScreenshots) {
-      Assertions.assertThat(screenshot.delete()).isTrue();
+      assertThat(screenshot.delete(), is(true));
     }
   }
 
@@ -48,7 +49,6 @@ public class EspressoSpoonTest extends ActivityInstrumentationTestCase2<SampleAc
     File screenshotWithoutDialogFile = FalconSpoon.screenshot(getActivity(), "No_dialog");
     takenScreenshots.add(screenshotWithoutDialogFile);
     double screenHsvValueWithoutDialog = computeAverageHsvValue(screenshotWithoutDialogFile);
-
 
     onView(withId(R.id.show_dialog)).perform(click());
     onView(withText("Screenshot")).check(matches(isDisplayed()));
@@ -59,7 +59,9 @@ public class EspressoSpoonTest extends ActivityInstrumentationTestCase2<SampleAc
 
     //HSV value fo screenshot without dialog should be much higher, due to dimming around dialog
     double withoutScreenshotHsvRatio = screenHsvValueWithoutDialog / screenHsvValueWithDialog;
-    Assertions.assertThat(withoutScreenshotHsvRatio).isGreaterThan(1.5);
+    String message = String.format("Dialog screen must be darker. Dialog value=%s, No dialog=%s",
+        screenHsvValueWithDialog, screenHsvValueWithoutDialog);
+    assertThat(message, withoutScreenshotHsvRatio, greaterThan(1.5));
   }
 
   private double computeAverageHsvValue(File bitmapFile) {
