@@ -166,7 +166,7 @@ public final class Falcon {
     List<ViewRootData> rootViews = new ArrayList<>();
 
     Object globalWindowManager;
-    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
       globalWindowManager = getFieldValue("mWindowManager", activity.getWindowManager());
     } else {
       globalWindowManager = getFieldValue("mGlobal", activity.getWindowManager());
