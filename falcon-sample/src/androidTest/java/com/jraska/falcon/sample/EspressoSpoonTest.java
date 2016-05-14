@@ -8,11 +8,14 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.ActivityInstrumentationTestCase2;
 import com.jraska.falcon.FalconSpoon;
 import org.assertj.core.api.Assertions;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -25,21 +28,33 @@ public class EspressoSpoonTest extends ActivityInstrumentationTestCase2<SampleAc
     super(SampleActivity.class);
   }
 
+  private List<File> takenScreenshots = new ArrayList<>();
+
   @Before
-  public void setUp() {
+  public void before() {
     injectInstrumentation(InstrumentationRegistry.getInstrumentation());
     getActivity();
+  }
+
+  @After
+  public void after() throws Exception {
+    for (File screenshot : takenScreenshots) {
+      Assertions.assertThat(screenshot.delete()).isTrue();
+    }
   }
 
   @Test
   public void testDialogTakenInScreenshot() throws Exception {
     File screenshotWithoutDialogFile = FalconSpoon.screenshot(getActivity(), "No_dialog");
+    takenScreenshots.add(screenshotWithoutDialogFile);
     double screenHsvValueWithoutDialog = computeAverageHsvValue(screenshotWithoutDialogFile);
+
 
     onView(withId(R.id.show_dialog)).perform(click());
     onView(withText("Screenshot")).check(matches(isDisplayed()));
 
     File screenshotWithDialogFile = FalconSpoon.screenshot(getActivity(), "Dialog_test");
+    takenScreenshots.add(screenshotWithDialogFile);
     double screenHsvValueWithDialog = computeAverageHsvValue(screenshotWithDialogFile);
 
     //HSV value fo screenshot without dialog should be much higher, due to dimming around dialog
