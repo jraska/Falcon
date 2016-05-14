@@ -57,11 +57,11 @@ public class EspressoSpoonTest extends ActivityInstrumentationTestCase2<SampleAc
     takenScreenshots.add(screenshotWithDialogFile);
     double screenHsvValueWithDialog = computeAverageHsvValue(screenshotWithDialogFile);
 
-    //HSV value fo screenshot without dialog should be much higher, due to dimming around dialog
+    //HSV value fo screenshot without dialog should be higher, due to dimming around dialog
     double withoutScreenshotHsvRatio = screenHsvValueWithoutDialog / screenHsvValueWithDialog;
     String message = String.format("Dialog screen must be darker. Dialog value=%s, No dialog=%s",
         screenHsvValueWithDialog, screenHsvValueWithoutDialog);
-    assertThat(message, withoutScreenshotHsvRatio, greaterThan(1.5));
+    assertThat(message, withoutScreenshotHsvRatio, greaterThan(1.3));
   }
 
   private double computeAverageHsvValue(File bitmapFile) {
