@@ -51,8 +51,8 @@ android {
 dependencies {
   compile project(':falcon')
 
-  compile 'com.android.support:appcompat-v7:23.4.0'
-  compile 'com.android.support:design:23.4.0'
+  compile 'com.android.support:appcompat-v7:24.0.0'
+  compile 'com.android.support:design:24.0.0'
   compile 'com.jakewharton:butterknife:7.0.1'
 
 
@@ -64,5 +64,5 @@ dependencies {
   androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
 
   // separately set because of test runners older dependencies
-  androidTestCompile 'com.android.support:support-annotations:23.4.0'
+  androidTestCompile 'com.android.support:support-annotations:24.0.0'
 }
