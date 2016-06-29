@@ -1,4 +1,15 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+  }
+}
+
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
@@ -51,9 +62,10 @@ android {
 dependencies {
   compile project(':falcon')
 
-  compile 'com.android.support:appcompat-v7:23.4.0'
-  compile 'com.android.support:design:23.4.0'
-  compile 'com.jakewharton:butterknife:7.0.1'
+  compile 'com.android.support:appcompat-v7:24.0.0'
+  compile 'com.android.support:design:24.0.0'
+  compile 'com.jakewharton:butterknife:8.1.0'
+  apt 'com.jakewharton:butterknife-compiler:8.1.0'
 
 
   androidTestCompile project(':falcon-spoon-compat')
@@ -64,5 +76,5 @@ dependencies {
   androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
 
   // separately set because of test runners older dependencies
-  androidTestCompile 'com.android.support:support-annotations:23.4.0'
+  androidTestCompile 'com.android.support:support-annotations:24.0.0'
 }

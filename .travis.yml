@@ -1,5 +1,8 @@
 language: android
 
+jdk:
+  - oraclejdk8
+
 before_script:
   - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
   - emulator -avd test -no-skin -no-audio -no-window &
@@ -9,9 +12,9 @@ before_script:
 android:
   components:
     - tools
+    - build-tools-24.0.0
+    - android-24
     - platform-tools
-    - build-tools-23.0.3
-    - android-23
 
     - extra-android-m2repository
 

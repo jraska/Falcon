@@ -10,13 +10,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.jraska.falcon.Falcon;
@@ -34,8 +32,8 @@ public class SampleActivity extends AppCompatActivity {
 
   //region Fields
 
-  @Bind(R.id.toolbar) Toolbar _toolbar;
-  @Bind(R.id.countdown) TextView _countdownText;
+  @BindView(R.id.toolbar) Toolbar _toolbar;
+  @BindView(R.id.countdown) TextView _countdownText;
 
   private int _remainingSeconds;
   private ScheduledExecutorService _executorService = Executors.newSingleThreadScheduledExecutor();
