@@ -6,6 +6,6 @@
  * because unfortunately AndroidJunit4 needs at least one method with this prefix
  * to run other JUnit 4 annotated methods.
  * <p/>
- * The code of two tests is similar, but is kept separated for easier understanding.
+ * The code of tests is similar, but is kept separated for easier understanding.
  */
 package com.jraska.falcon.sample;

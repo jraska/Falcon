@@ -1,20 +1,18 @@
 package com.jraska.falcon.sample;
 
 import android.graphics.Bitmap;
-import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.ActivityInstrumentationTestCase2;
 import com.jraska.falcon.Falcon;
 import org.junit.After;
-import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
 
 import static com.jraska.falcon.sample.matchers.BitmapFileMatcher.isBitmap;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
 
@@ -22,41 +20,29 @@ import static org.junit.Assert.assertThat;
  * Shows usage of {@link Falcon} screenshots
  */
 @RunWith(AndroidJUnit4.class)
-public class FalconTest extends ActivityInstrumentationTestCase2<SampleActivity> {
+public class FalconTest {
   //region Constants
 
-  public static final int SMALLEST_SCREEN_EVER = 100;
+  static final int SMALLEST_SCREEN_EVER = 100;
 
   //endregion
 
   //region Fields
 
+  @Rule
+  public ActivityTestRule<SampleActivity> _activityRule = new ActivityTestRule<>(
+      SampleActivity.class);
+
   private File _screenshotFile;
-
-  //endregion
-
-  //region Constructors
-
-  public FalconTest() {
-    super(SampleActivity.class);
-  }
 
   //endregion
 
   //region Setup Methods
 
-  @Before
-  public void before() throws Exception {
-    injectInstrumentation(InstrumentationRegistry.getInstrumentation());
-
-    getActivity();
-  }
-
-  @SuppressWarnings("ResultOfMethodCallIgnored")
   @After
   public void after() throws Exception {
     if (_screenshotFile != null) {
-      _screenshotFile.delete();
+      assertThat(_screenshotFile.delete(), is(true));
     }
   }
 
@@ -65,26 +51,31 @@ public class FalconTest extends ActivityInstrumentationTestCase2<SampleActivity>
   //region Test methods
 
   @Test
-  public void testTakeScreenshot() throws Exception {
-    File newFile = getActivity().getScreenshotFile();
+  public void takesScreenshotToFile() throws Exception {
+    SampleActivity activity = _activityRule.getActivity();
+    File newFile = activity.getScreenshotFile();
     _screenshotFile = newFile;
 
     //check that file does not exist yet
-    assertFalse(newFile.exists());
+    assertThat(newFile.exists(), is(false));
 
-    Falcon.takeScreenshot(getActivity(), newFile);
+    Falcon.takeScreenshot(activity, newFile);
 
     assertThat(newFile, isBitmap());
   }
 
   @Test
-  public void testTakeScreenshotBitmap() throws Exception {
-    Bitmap bitmap = Falcon.takeScreenshotBitmap(getActivity());
+  public void takesScreenshotToBitmap() throws Exception {
+    Bitmap bitmap = Falcon.takeScreenshotBitmap(_activityRule.getActivity());
 
     assertThat(bitmap, not(nullValue()));
 
     assertThat(bitmap.getWidth(), greaterThan(SMALLEST_SCREEN_EVER));
     assertThat(bitmap.getHeight(), greaterThan(SMALLEST_SCREEN_EVER));
+  }
+
+  public void takesDialogIntoScreenshot() throws Exception {
+
   }
 
   //endregion
