@@ -13,6 +13,7 @@ import android.view.WindowManager.LayoutParams;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -91,16 +92,30 @@ public final class Falcon {
     }
   }
 
-
   //endregion
 
   //region Methods
 
   private static Bitmap takeBitmapUnchecked(Activity activity) throws InterruptedException {
     final List<ViewRootData> viewRoots = getRootViews(activity);
-    View main = activity.getWindow().getDecorView();
+    if (viewRoots.isEmpty()) {
+      throw new UnableToTakeScreenshotException("Unable to capture any view data in " + activity);
+    }
 
-    final Bitmap bitmap = Bitmap.createBitmap(main.getWidth(), main.getHeight(), ARGB_8888);
+    int maxWidth = Integer.MIN_VALUE;
+    int maxHeight = Integer.MIN_VALUE;
+
+    for (ViewRootData viewRoot : viewRoots) {
+      if (viewRoot._winFrame.right > maxWidth) {
+        maxWidth = viewRoot._winFrame.right;
+      }
+
+      if (viewRoot._winFrame.bottom > maxHeight) {
+        maxHeight = viewRoot._winFrame.bottom;
+      }
+    }
+
+    final Bitmap bitmap = Bitmap.createBitmap(maxWidth, maxHeight, ARGB_8888);
 
     // We need to do it in main thread
     if (Looper.myLooper() == Looper.getMainLooper()) {
@@ -212,7 +227,31 @@ public final class Falcon {
       rootViews.add(new ViewRootData(view, area, params[i]));
     }
 
+    if (rootViews.isEmpty()) {
+      return Collections.emptyList();
+    }
+
+    offsetRootsTopLeft(rootViews);
+
     return rootViews;
+  }
+
+  private static void offsetRootsTopLeft(List<ViewRootData> rootViews) {
+    int minTop = Integer.MAX_VALUE;
+    int minLeft = Integer.MAX_VALUE;
+    for (ViewRootData rootView : rootViews) {
+      if (rootView._winFrame.top < minTop) {
+        minTop = rootView._winFrame.top;
+      }
+
+      if (rootView._winFrame.left < minLeft) {
+        minLeft = rootView._winFrame.left;
+      }
+    }
+
+    for (ViewRootData rootView : rootViews) {
+      rootView._winFrame.offset(-minLeft, -minTop);
+    }
   }
 
   private static Object getFieldValue(String fieldName, Object target) {
@@ -263,6 +302,10 @@ public final class Falcon {
    * screenshot capturing to enable better client code exception handling.
    */
   public static class UnableToTakeScreenshotException extends RuntimeException {
+    private UnableToTakeScreenshotException(String detailMessage) {
+      super(detailMessage);
+    }
+
     private UnableToTakeScreenshotException(String detailMessage, Exception exception) {
       super(detailMessage, extractException(exception));
     }

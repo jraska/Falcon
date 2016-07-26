@@ -10,6 +10,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
@@ -51,6 +53,23 @@ public class SampleActivity extends AppCompatActivity {
 
     setSupportActionBar(_toolbar);
   }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu_sample, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    if (item.getItemId() == R.id.action_floating) {
+      FloatingViewActivity.start(this);
+      return true;
+    }
+
+    return super.onOptionsItemSelected(item);
+  }
+
 
   //endregion
 
@@ -165,8 +184,7 @@ public class SampleActivity extends AppCompatActivity {
     File screenshotDirectory;
     try {
       screenshotDirectory = getScreenshotsDirectory(getApplicationContext());
-    }
-    catch (IllegalAccessException e) {
+    } catch (IllegalAccessException e) {
       throw new RuntimeException(e);
     }
 
