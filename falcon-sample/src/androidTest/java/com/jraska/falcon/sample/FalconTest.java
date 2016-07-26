@@ -3,6 +3,7 @@ package com.jraska.falcon.sample;
 import android.graphics.Bitmap;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.View;
 import com.jraska.falcon.Falcon;
 import org.junit.After;
 import org.junit.Rule;
@@ -74,8 +75,14 @@ public class FalconTest {
     assertThat(bitmap.getHeight(), greaterThan(SMALLEST_SCREEN_EVER));
   }
 
-  public void takesDialogIntoScreenshot() throws Exception {
+  @Test
+  public void takesCorrectScreenshotSize() {
+    SampleActivity activity = _activityRule.getActivity();
+    Bitmap bitmap = Falcon.takeScreenshotBitmap(activity);
 
+    View decorView = activity.getWindow().getDecorView();
+    assertThat(bitmap.getWidth(), is(decorView.getWidth()));
+    assertThat(bitmap.getHeight(), is(decorView.getHeight()));
   }
 
   //endregion
