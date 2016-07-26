@@ -12,7 +12,7 @@ before_script:
 android:
   components:
     - tools
-    - build-tools-24.0.0
+    - build-tools-24.0.1
     - android-24
     - platform-tools
 

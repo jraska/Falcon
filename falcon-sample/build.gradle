@@ -43,29 +43,23 @@ android {
     }
   }
 
-
   lintOptions {
     disable 'UnusedAttribute', 'GoogleAppIndexingWarning'
     abortOnError true
   }
 
-  packagingOptions {
-    exclude 'META-INF/services/javax.annotation.processing.Processor'
-  }
-
   defaultConfig {
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
-
 }
 
 dependencies {
   compile project(':falcon')
 
-  compile 'com.android.support:appcompat-v7:24.0.0'
-  compile 'com.android.support:design:24.0.0'
-  compile 'com.jakewharton:butterknife:8.1.0'
-  apt 'com.jakewharton:butterknife-compiler:8.1.0'
+  compile 'com.android.support:appcompat-v7:24.1.1'
+  compile 'com.android.support:design:24.1.1'
+  compile 'com.jakewharton:butterknife:8.2.1'
+  apt 'com.jakewharton:butterknife-compiler:8.2.1'
 
 
   androidTestCompile project(':falcon-spoon-compat')
@@ -76,5 +70,5 @@ dependencies {
   androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
 
   // separately set because of test runners older dependencies
-  androidTestCompile 'com.android.support:support-annotations:24.0.0'
+  androidTestCompile 'com.android.support:support-annotations:24.1.1'
 }
