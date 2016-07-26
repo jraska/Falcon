@@ -53,15 +53,13 @@ public final class Falcon {
     try {
       bitmap = takeBitmapUnchecked(activity);
       writeBitmap(bitmap, toFile);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       String message = "Unable to take screenshot to file " + toFile.getAbsolutePath()
           + " of activity " + activity.getClass().getName();
 
       Log.e(TAG, message, e);
       throw new UnableToTakeScreenshotException(message, e);
-    }
-    finally {
+    } finally {
       if (bitmap != null) {
         bitmap.recycle();
       }
@@ -84,8 +82,7 @@ public final class Falcon {
 
     try {
       return takeBitmapUnchecked(activity);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       String message = "Unable to take screenshot to bitmap of activity "
           + activity.getClass().getName();
 
@@ -115,8 +112,7 @@ public final class Falcon {
         public void run() {
           try {
             drawRootsToBitmap(viewRoots, bitmap);
-          }
-          finally {
+          } finally {
             latch.countDown();
           }
         }
@@ -153,10 +149,17 @@ public final class Falcon {
     try {
       outputStream = new BufferedOutputStream(new FileOutputStream(toFile));
       bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+    } finally {
+      closeQuietly(outputStream);
     }
-    finally {
-      if (outputStream != null) {
-        outputStream.close();
+  }
+
+  private static void closeQuietly(Closeable closable) {
+    if (closable != null) {
+      try {
+        closable.close();
+      } catch (IOException e) {
+        // Do nothing
       }
     }
   }
@@ -191,6 +194,14 @@ public final class Falcon {
     for (int i = 0; i < roots.length; i++) {
       Object root = roots[i];
 
+      View view = (View) getFieldValue("mView", root);
+
+      // fixes https://github.com/jraska/Falcon/issues/10
+      if (view == null) {
+        Log.e(TAG, "null View stored as root in Global window manager, skipping");
+        continue;
+      }
+
       Object attachInfo = getFieldValue("mAttachInfo", root);
       int top = (int) getFieldValue("mWindowTop", attachInfo);
       int left = (int) getFieldValue("mWindowLeft", attachInfo);
@@ -198,7 +209,6 @@ public final class Falcon {
       Rect winFrame = (Rect) getFieldValue("mWinFrame", root);
       Rect area = new Rect(left, top, left + winFrame.width(), top + winFrame.height());
 
-      View view = (View) getFieldValue("mView", root);
       rootViews.add(new ViewRootData(view, area, params[i]));
     }
 
@@ -208,8 +218,7 @@ public final class Falcon {
   private static Object getFieldValue(String fieldName, Object target) {
     try {
       return getFieldValueUnchecked(fieldName, target);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       throw new UnableToTakeScreenshotException(e);
     }
   }
@@ -280,7 +289,7 @@ public final class Falcon {
     private final Rect _winFrame;
     private final LayoutParams _layoutParams;
 
-    public ViewRootData(View view, Rect winFrame, LayoutParams layoutParams) {
+    ViewRootData(View view, Rect winFrame, LayoutParams layoutParams) {
       _view = view;
       _winFrame = winFrame;
       _layoutParams = layoutParams;
