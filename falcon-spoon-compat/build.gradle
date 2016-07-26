@@ -3,54 +3,54 @@ apply plugin: 'com.android.library'
 version = rootProject.ext.version
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
 
-    defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionName version
-        versionCode rootProject.ext.versionCode
-    }
+  defaultConfig {
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion rootProject.ext.targetSdkVersion
+    versionName version
+    versionCode rootProject.ext.versionCode
+  }
 
-    compileOptions {
-        sourceCompatibility rootProject.ext.sourceCompatibility
-        targetCompatibility rootProject.ext.sourceCompatibility
-    }
+  compileOptions {
+    sourceCompatibility rootProject.ext.sourceCompatibility
+    targetCompatibility rootProject.ext.sourceCompatibility
+  }
 
-    lintOptions {
-        abortOnError true
-        disable 'UnusedAttribute'
-    }
+  lintOptions {
+    abortOnError true
+    disable 'UnusedAttribute'
+  }
 }
 
 dependencies {
-    compile project(':falcon')
-    compile 'com.squareup.spoon:spoon-client:1.6.1'
+  compile project(':falcon')
+  compile 'com.squareup.spoon:spoon-client:1.6.1'
 }
 
 ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'com.jraska:falcon-spoon-compat'
+  bintrayRepo = 'maven'
+  bintrayName = 'com.jraska:falcon-spoon-compat'
 
-    publishedGroupId = 'com.jraska'
-    libraryName = 'Falcon'
-    artifact = 'falcon-spoon-compat'
+  publishedGroupId = 'com.jraska'
+  libraryName = 'Falcon'
+  artifact = 'falcon-spoon-compat'
 
-    libraryDescription = 'Using Falcon with Spoon'
+  libraryDescription = 'Using Falcon with Spoon'
 
-    siteUrl = 'https://github.com/jraska/Falcon'
-    gitUrl = 'https://github.com/jraska/Falcon.git'
+  siteUrl = 'https://github.com/jraska/Falcon'
+  gitUrl = 'https://github.com/jraska/Falcon.git'
 
-    libraryVersion = version
+  libraryVersion = version
 
-    developerId = 'jraska'
-    developerName = 'Josef Raska'
-    developerEmail = 'josef.raska@gmail.com'
+  developerId = 'jraska'
+  developerName = 'Josef Raska'
+  developerEmail = 'josef.raska@gmail.com'
 
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
+  licenseName = 'The Apache Software License, Version 2.0'
+  licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+  allLicenses = ["Apache-2.0"]
 }
 
 apply from: rootDir.absolutePath + '/gradle/installv1.gradle'
