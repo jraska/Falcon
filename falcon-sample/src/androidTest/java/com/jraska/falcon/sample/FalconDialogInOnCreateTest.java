@@ -15,14 +15,14 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.jraska.falcon.sample.CICheck.assumeNoCI;
 import static com.jraska.falcon.sample.asserts.BitmapAssert.assertThatBitmap;
 
-// https://github.com/jraska/Falcon/issues/11
-public class OnCreateDialogNotIncludedProofTest {
+public class FalconDialogInOnCreateTest {
   @Rule
   public ActivityTestRule<DialogOnCreate> _activityRule = new ActivityTestRule<>(
       DialogOnCreate.class);
 
+  // Tests https://github.com/jraska/Falcon/issues/11
   @Test
-  public void proofDialogIsMissed() {
+  public void takesDialogOnCreate() {
     assumeNoCI();
 
     DialogOnCreate activity = _activityRule.getActivity();
@@ -34,6 +34,6 @@ public class OnCreateDialogNotIncludedProofTest {
 
     Bitmap afterDialogDismiss = Falcon.takeScreenshotBitmap(activity);
 
-    assertThatBitmap(afterDialogDismiss).isSameAs(withDialog);
+    assertThatBitmap(withDialog).isDarkerThan(afterDialogDismiss);
   }
 }

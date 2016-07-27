@@ -1,6 +1,9 @@
 package com.jraska.falcon;
 
 import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -232,6 +235,7 @@ public final class Falcon {
     }
 
     offsetRootsTopLeft(rootViews);
+    ensureDialogsAreAfterItsParentActivities(rootViews);
 
     return rootViews;
   }
@@ -252,6 +256,51 @@ public final class Falcon {
     for (ViewRootData rootView : rootViews) {
       rootView._winFrame.offset(-minLeft, -minTop);
     }
+  }
+
+  // This fixes issue #11. It is not perfect solution and maybe there is another case
+  // of different type of view, but it works for most common case of dialogs.
+  private static void ensureDialogsAreAfterItsParentActivities(List<ViewRootData> viewRoots) {
+    if (viewRoots.size() <= 1) {
+      return;
+    }
+
+    for (int dialogIndex = 0; dialogIndex < viewRoots.size() - 1; dialogIndex++) {
+      ViewRootData viewRoot = viewRoots.get(dialogIndex);
+      if (!viewRoot.isDialogType()) {
+        continue;
+      }
+
+      Activity dialogOwningActivity = owningActivity(viewRoot.context());
+      for (int parentIndex = dialogIndex + 1; parentIndex < viewRoots.size(); parentIndex++) {
+        ViewRootData possibleParent = viewRoots.get(parentIndex);
+        if (possibleParent.isActivityType()
+            && owningActivity(possibleParent.context()) == dialogOwningActivity) {
+          viewRoots.remove(possibleParent);
+          viewRoots.add(dialogIndex, possibleParent);
+
+          break;
+        }
+      }
+    }
+  }
+
+  private static Activity owningActivity(Context context) {
+    Context currentContext = context;
+
+    while (currentContext != null) {
+      if (currentContext instanceof Activity) {
+        return (Activity) currentContext;
+      }
+
+      if (currentContext instanceof ContextWrapper && !(currentContext instanceof Application)) {
+        currentContext = ((ContextWrapper) currentContext).getBaseContext();
+      } else {
+        break;
+      }
+    }
+
+    return null;
   }
 
   private static Object getFieldValue(String fieldName, Object target) {
@@ -336,6 +385,18 @@ public final class Falcon {
       _view = view;
       _winFrame = winFrame;
       _layoutParams = layoutParams;
+    }
+
+    boolean isDialogType() {
+      return _layoutParams.type == LayoutParams.TYPE_APPLICATION;
+    }
+
+    boolean isActivityType() {
+      return _layoutParams.type == LayoutParams.TYPE_BASE_APPLICATION;
+    }
+
+    Context context() {
+      return _view.getContext();
     }
   }
 
