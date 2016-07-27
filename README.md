@@ -25,7 +25,7 @@ Check falcon-sample and its android tests for more example usage.
 
 Grab via Gradle:
 ```groovy
-compile 'com.jraska:falcon:1.0.1'
+compile 'com.jraska:falcon:1.0.2'
 ```
 
 ## Spoon Compat
@@ -43,7 +43,7 @@ File screenshot = FalconSpoon.screenshot(activity, tag, testClassName, testMetho
 
 #### Gradle
 ```groovy
-androidTestCompile 'com.jraska:falcon-spoon-compat:1.0.1'
+androidTestCompile 'com.jraska:falcon-spoon-compat:1.0.2'
 ```
 
 ## Q&A
