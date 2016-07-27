@@ -16,10 +16,6 @@ public class FloatingViewActivity extends SampleActivity {
     super.onCreate(savedInstanceState);
   }
 
-  @Override public boolean onCreateOptionsMenu(Menu menu) {
-    return false;
-  }
-
   private void setupFloatingWindow() {
     Point size = getSize();
 
