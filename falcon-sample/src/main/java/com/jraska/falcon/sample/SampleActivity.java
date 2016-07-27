@@ -2,6 +2,8 @@ package com.jraska.falcon.sample;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Looper;
@@ -166,6 +168,11 @@ public class SampleActivity extends AppCompatActivity {
 
     String message = "Screenshot captured to " + screenshotFile.getAbsolutePath();
     Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
+    Uri uri = Uri.fromFile(screenshotFile);
+    Intent scanFileIntent = new Intent(
+        Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
+    sendBroadcast(scanFileIntent);
   }
 
   @OnClick(R.id.show_popup)
