@@ -19,6 +19,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static com.jraska.falcon.sample.CICheck.assumeNoCI;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
@@ -49,11 +50,12 @@ public class EspressoSpoonTest {
 
   //endregion
 
-
   //region Test Methods
 
   @Test
   public void dialogTakenInScreenshot() throws Exception {
+    assumeNoCI();
+
     SampleActivity activity = _activityRule.getActivity();
     File screenshotWithoutDialogFile = FalconSpoon.screenshot(activity, "No_dialog");
     takenScreenshots.add(screenshotWithoutDialogFile);

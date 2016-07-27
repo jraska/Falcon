@@ -6,19 +6,16 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
 import com.jraska.falcon.Falcon;
-import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.File;
-
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static com.jraska.falcon.sample.matchers.BitmapFileMatcher.isBitmap;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.core.IsNot.not;
+import static com.jraska.falcon.sample.CICheck.assumeNoCI;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(AndroidJUnit4.class)
@@ -48,6 +45,8 @@ public class FalconFloatingWindowTest {
 
   @Test
   public void takesToastOutOfWindowIntoScreenshot() {
+    assumeNoCI();
+
     SampleActivity activity = _activityRule.getActivity();
     onView(withId(R.id.show_toast)).perform(click());
 
