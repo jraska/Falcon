@@ -113,8 +113,10 @@ public final class BitmapAssert extends AbstractAssert<BitmapAssert, Bitmap> {
       return 1;
     } else if (countOfPixels < 1024 * 768) {
       return 2;
-    } else {
+    } else if (countOfPixels < 1600 * 1200) {
       return 4;
+    } else {
+      return 8;
     }
   }
 }

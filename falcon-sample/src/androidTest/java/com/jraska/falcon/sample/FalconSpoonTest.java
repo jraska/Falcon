@@ -4,12 +4,14 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import com.jraska.falcon.FalconSpoon;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
 
+import static com.jraska.falcon.sample.Assumptions.assumeSpoonPermissions;
 import static com.jraska.falcon.sample.asserts.BitmapFileAssert.assertThatFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,6 +32,11 @@ public class FalconSpoonTest {
   //endregion
 
   //region Setup Methods
+
+  @Before
+  public void before() throws Exception {
+    assumeSpoonPermissions();
+  }
 
   @After
   public void after() throws Exception {

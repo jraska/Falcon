@@ -7,6 +7,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import com.jraska.falcon.FalconSpoon;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,10 +19,9 @@ import java.util.List;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.jraska.falcon.sample.CICheck.assumeNoCI;
+import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static com.jraska.falcon.sample.Assumptions.assumeNoCI;
+import static com.jraska.falcon.sample.Assumptions.assumeSpoonPermissions;
 import static com.jraska.falcon.sample.asserts.BitmapFileAssert.assertThatFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -43,6 +43,12 @@ public class EspressoSpoonTest {
 
   //region Setup Methods
 
+  @Before
+  public void before() throws Exception {
+    assumeNoCI();
+    assumeSpoonPermissions();
+  }
+
   @After
   public void after() throws Exception {
     for (File screenshot : takenScreenshots) {
@@ -56,8 +62,6 @@ public class EspressoSpoonTest {
 
   @Test
   public void dialogTakenInScreenshot() throws Exception {
-    assumeNoCI();
-
     SampleActivity activity = _activityRule.getActivity();
 
     File screenshotWithoutDialogFile = FalconSpoon.screenshot(activity, "No_dialog");

@@ -12,7 +12,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.doesNotExis
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.jraska.falcon.sample.CICheck.assumeNoCI;
+import static com.jraska.falcon.sample.Assumptions.assumeNoCI;
 import static com.jraska.falcon.sample.asserts.BitmapAssert.assertThatBitmap;
 
 public class FalconDialogInOnCreateTest {

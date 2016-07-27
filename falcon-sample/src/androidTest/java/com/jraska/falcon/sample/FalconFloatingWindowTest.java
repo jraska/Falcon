@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static com.jraska.falcon.sample.CICheck.assumeNoCI;
+import static com.jraska.falcon.sample.Assumptions.assumeNoCI;
 import static com.jraska.falcon.sample.asserts.BitmapAssert.assertThatBitmap;
 import static org.assertj.core.api.Assertions.assertThat;
 
