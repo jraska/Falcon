@@ -8,63 +8,63 @@
     android:layout_height="match_parent"
     tools:context=".SampleActivity">
 
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:weightSum="4"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:weightSum="4"
-            android:orientation="horizontal">
+      <Button
+          android:id="@+id/show_snack"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="@string/show_snack" />
 
-            <Button
-                android:id="@+id/show_snack"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/show_snack" />
+      <Button
+          android:id="@+id/show_toast"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="@string/show_toast" />
 
-            <Button
-                android:id="@+id/show_toast"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/show_toast" />
+      <Button
+          android:id="@+id/show_dialog"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="@string/show_dialog" />
 
-            <Button
-                android:id="@+id/show_dialog"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/show_dialog" />
-
-            <Button
-                android:id="@+id/show_popup"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/show_popup" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/countdown"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:visibility="visible"
-            android:textColor="@color/mainText"
-            android:textSize="@dimen/text_main"
-            android:gravity="center"
-            tools:text="Screenshot in 3"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:text="@string/large_text" />
+      <Button
+          android:id="@+id/show_popup"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="@string/show_popup" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/countdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:textColor="@color/mainText"
+        android:textSize="@dimen/text_main"
+        android:gravity="center"
+        tools:text="Screenshot in 3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:text="@string/large_text" />
+  </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

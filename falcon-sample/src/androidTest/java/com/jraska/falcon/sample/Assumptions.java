@@ -1,12 +1,8 @@
 package com.jraska.falcon.sample;
 
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
 import org.junit.Assume;
 
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
 

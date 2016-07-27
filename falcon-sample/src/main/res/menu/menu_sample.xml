@@ -2,8 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.jraska.calendar.MainActivity">
-    <item
-        android:id="@+id/action_floating"
-        android:title="@string/action_floating"
-        app:showAsAction="always" />
+  <item
+      android:id="@+id/action_floating"
+      android:title="@string/action_floating"
+      app:showAsAction="always" />
 </menu>

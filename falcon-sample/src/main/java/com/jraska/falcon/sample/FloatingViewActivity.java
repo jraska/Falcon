@@ -6,7 +6,6 @@ import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Display;
-import android.view.Menu;
 import android.view.WindowManager;
 
 public class FloatingViewActivity extends SampleActivity {
