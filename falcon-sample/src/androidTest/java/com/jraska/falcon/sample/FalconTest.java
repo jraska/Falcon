@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 
+import static com.jraska.falcon.sample.asserts.BitmapAssert.assertThatBitmap;
 import static com.jraska.falcon.sample.asserts.BitmapFileAssert.assertThatFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -70,8 +71,8 @@ public class FalconTest {
 
     assertThat(bitmap).isNotNull();
 
-    assertThat(bitmap.getWidth()).isGreaterThan(SMALLEST_SCREEN_EVER);
-    assertThat(bitmap.getHeight()).isGreaterThan(SMALLEST_SCREEN_EVER);
+    assertThatBitmap(bitmap).hasWidthGreaterThan(SMALLEST_SCREEN_EVER);
+    assertThatBitmap(bitmap).hasHeightGreaterThan(SMALLEST_SCREEN_EVER);
   }
 
   @Test
@@ -80,8 +81,8 @@ public class FalconTest {
     Bitmap bitmap = Falcon.takeScreenshotBitmap(activity);
 
     View decorView = activity.getWindow().getDecorView();
-    assertThat(bitmap.getWidth()).isEqualTo(decorView.getWidth());
-    assertThat(bitmap.getHeight()).isEqualTo(decorView.getHeight());
+    assertThatBitmap(bitmap).hasWidth(decorView.getWidth());
+    assertThatBitmap(bitmap).hasHeight(decorView.getHeight());
   }
 
   //endregion

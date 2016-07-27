@@ -22,6 +22,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.jraska.falcon.sample.CICheck.assumeNoCI;
+import static com.jraska.falcon.sample.asserts.BitmapFileAssert.assertThatFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -58,20 +59,17 @@ public class EspressoSpoonTest {
     assumeNoCI();
 
     SampleActivity activity = _activityRule.getActivity();
+
     File screenshotWithoutDialogFile = FalconSpoon.screenshot(activity, "No_dialog");
     takenScreenshots.add(screenshotWithoutDialogFile);
-    double screenHsvValueWithoutDialog = computeAverageHsvValue(screenshotWithoutDialogFile);
 
     onView(withId(R.id.show_dialog)).perform(click());
     onView(withText("Screenshot")).check(matches(isDisplayed()));
 
     File screenshotWithDialogFile = FalconSpoon.screenshot(activity, "Dialog_test");
     takenScreenshots.add(screenshotWithDialogFile);
-    double screenHsvValueWithDialog = computeAverageHsvValue(screenshotWithDialogFile);
 
-    // HSV Value fo screenshot without dialog should be higher, due to dimming around dialog
-    double withoutScreenshotHsvRatio = screenHsvValueWithoutDialog / screenHsvValueWithDialog;
-    assertThat(withoutScreenshotHsvRatio).isGreaterThan(1.3);
+    assertThatFile(screenshotWithDialogFile).isDarkerThan(screenshotWithoutDialogFile);
   }
 
   //endregion

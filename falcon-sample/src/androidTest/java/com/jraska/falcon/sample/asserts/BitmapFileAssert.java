@@ -6,7 +6,9 @@ import org.assertj.core.api.FileAssert;
 
 import java.io.File;
 
-public class BitmapFileAssert extends FileAssert {
+import static com.jraska.falcon.sample.asserts.BitmapAssert.assertThatBitmap;
+
+public final class BitmapFileAssert extends FileAssert {
   private BitmapFileAssert(File actual) {
     super(actual);
   }
@@ -30,5 +32,26 @@ public class BitmapFileAssert extends FileAssert {
     }
 
     return this;
+  }
+
+  public BitmapFileAssert isDarkerThan(File bitmapFile) {
+    Bitmap actualBitmap = loadSampledBitmap(actual);
+    Bitmap bitmap = loadSampledBitmap(bitmapFile);
+
+    assertThatBitmap(actualBitmap).isDarkerThan(bitmap);
+
+    return this;
+  }
+
+  static double computeAverageHsvValue(File bitmapFile) {
+    Bitmap bitmap = loadSampledBitmap(bitmapFile);
+    return BitmapAssert.computeAverageHsvValue(bitmap);
+  }
+
+  private static Bitmap loadSampledBitmap(File bitmapFile) {
+    BitmapFactory.Options sampleImageOptions = new BitmapFactory.Options();
+    sampleImageOptions.inSampleSize = 4;
+
+    return BitmapFactory.decodeFile(bitmapFile.getAbsolutePath(), sampleImageOptions);
   }
 }

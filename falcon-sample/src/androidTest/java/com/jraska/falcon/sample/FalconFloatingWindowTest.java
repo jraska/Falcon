@@ -14,6 +14,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.jraska.falcon.sample.CICheck.assumeNoCI;
+import static com.jraska.falcon.sample.asserts.BitmapAssert.assertThatBitmap;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(AndroidJUnit4.class)
@@ -37,8 +38,8 @@ public class FalconFloatingWindowTest {
     Bitmap bitmap = Falcon.takeScreenshotBitmap(activity);
 
     View decorView = activity.getWindow().getDecorView();
-    assertThat(bitmap.getWidth()).isEqualTo(decorView.getWidth());
-    assertThat(bitmap.getHeight()).isEqualTo(decorView.getHeight());
+    assertThatBitmap(bitmap).hasWidth(decorView.getWidth());
+    assertThatBitmap(bitmap).hasHeight(decorView.getHeight());
   }
 
   @Test
@@ -51,7 +52,7 @@ public class FalconFloatingWindowTest {
     Bitmap bitmap = Falcon.takeScreenshotBitmap(activity);
 
     View decorView = activity.getWindow().getDecorView();
-    assertThat(bitmap.getHeight()).isGreaterThan(decorView.getHeight());
+    assertThatBitmap(bitmap).hasWidthGreaterThan(decorView.getHeight());
   }
 
   //endregion
