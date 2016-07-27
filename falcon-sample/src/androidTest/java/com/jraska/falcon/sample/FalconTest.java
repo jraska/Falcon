@@ -12,10 +12,9 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 
-import static com.jraska.falcon.sample.matchers.BitmapFileMatcher.isBitmap;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.assertThat;
+import static com.jraska.falcon.sample.asserts.BitmapFileAssert.assertThatFile;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 /**
  * Shows usage of {@link Falcon} screenshots
@@ -43,7 +42,7 @@ public class FalconTest {
   @After
   public void after() throws Exception {
     if (_screenshotFile != null) {
-      assertThat(_screenshotFile.delete(), is(true));
+      assertThat(_screenshotFile.delete()).isTrue();
     }
   }
 
@@ -58,21 +57,21 @@ public class FalconTest {
     _screenshotFile = newFile;
 
     //check that file does not exist yet
-    assertThat(newFile.exists(), is(false));
+    assertThat(newFile).doesNotExist();
 
     Falcon.takeScreenshot(activity, newFile);
 
-    assertThat(newFile, isBitmap());
+    assertThatFile(newFile).isBitmap();
   }
 
   @Test
   public void takesScreenshotToBitmap() throws Exception {
     Bitmap bitmap = Falcon.takeScreenshotBitmap(_activityRule.getActivity());
 
-    assertThat(bitmap, not(nullValue()));
+    assertThat(bitmap).isNotNull();
 
-    assertThat(bitmap.getWidth(), greaterThan(SMALLEST_SCREEN_EVER));
-    assertThat(bitmap.getHeight(), greaterThan(SMALLEST_SCREEN_EVER));
+    assertThat(bitmap.getWidth()).isGreaterThan(SMALLEST_SCREEN_EVER);
+    assertThat(bitmap.getHeight()).isGreaterThan(SMALLEST_SCREEN_EVER);
   }
 
   @Test
@@ -81,8 +80,8 @@ public class FalconTest {
     Bitmap bitmap = Falcon.takeScreenshotBitmap(activity);
 
     View decorView = activity.getWindow().getDecorView();
-    assertThat(bitmap.getWidth(), is(decorView.getWidth()));
-    assertThat(bitmap.getHeight(), is(decorView.getHeight()));
+    assertThat(bitmap.getWidth()).isEqualTo(decorView.getWidth());
+    assertThat(bitmap.getHeight()).isEqualTo(decorView.getHeight());
   }
 
   //endregion

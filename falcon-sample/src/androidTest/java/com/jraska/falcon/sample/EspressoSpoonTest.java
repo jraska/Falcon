@@ -18,10 +18,11 @@ import java.util.List;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.jraska.falcon.sample.CICheck.assumeNoCI;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Example Espresso test of dialog taken by SpoonCompat
@@ -44,7 +45,7 @@ public class EspressoSpoonTest {
   @After
   public void after() throws Exception {
     for (File screenshot : takenScreenshots) {
-      assertThat(screenshot.delete(), is(true));
+      assertThat(screenshot.delete()).isTrue();
     }
   }
 
@@ -70,9 +71,7 @@ public class EspressoSpoonTest {
 
     // HSV Value fo screenshot without dialog should be higher, due to dimming around dialog
     double withoutScreenshotHsvRatio = screenHsvValueWithoutDialog / screenHsvValueWithDialog;
-    String message = String.format("Dialog screen must be darker. Dialog value=%s, No dialog=%s",
-        screenHsvValueWithDialog, screenHsvValueWithoutDialog);
-    assertThat(message, withoutScreenshotHsvRatio, greaterThan(1.3));
+    assertThat(withoutScreenshotHsvRatio).isGreaterThan(1.3);
   }
 
   //endregion

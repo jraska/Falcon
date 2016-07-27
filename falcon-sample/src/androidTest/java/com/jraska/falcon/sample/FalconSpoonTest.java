@@ -10,10 +10,8 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 
-import static com.jraska.falcon.sample.matchers.BitmapFileMatcher.isBitmap;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static com.jraska.falcon.sample.asserts.BitmapFileAssert.assertThatFile;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Shows usage of {@link FalconSpoon} compat screenshots
@@ -36,7 +34,7 @@ public class FalconSpoonTest {
   @After
   public void after() throws Exception {
     if (_screenshotFile != null) {
-      assertThat(_screenshotFile.delete(), is(true));
+      assertThat(_screenshotFile.delete()).isTrue();
     }
   }
 
@@ -49,8 +47,8 @@ public class FalconSpoonTest {
     String tag = "ExampleScreenshot";
     _screenshotFile = FalconSpoon.screenshot(_activityRule.getActivity(), tag);
 
-    assertThat(_screenshotFile.length(), greaterThan(0L));
-    assertThat(_screenshotFile, isBitmap());
+    assertThat(_screenshotFile.length()).isGreaterThan(0L);
+    assertThatFile(_screenshotFile).isBitmap();
   }
 
   @Test
@@ -60,8 +58,8 @@ public class FalconSpoonTest {
     _screenshotFile = FalconSpoon.screenshot(_activityRule.getActivity(), tag,
         "FalconSpoonTest", "CustomMethodName");
 
-    assertThat(_screenshotFile.length(), greaterThan(0L));
-    assertThat(_screenshotFile, isBitmap());
+    assertThat(_screenshotFile.length()).isGreaterThan(0L);
+    assertThatFile(_screenshotFile).isBitmap();
   }
 
   //endregion
