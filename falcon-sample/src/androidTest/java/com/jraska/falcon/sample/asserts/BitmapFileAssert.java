@@ -38,7 +38,7 @@ public final class BitmapFileAssert extends FileAssert {
     Bitmap actualBitmap = loadSampledBitmap(actual);
     Bitmap bitmap = loadSampledBitmap(bitmapFile);
 
-    assertThatBitmap(actualBitmap).isDarkerThan(bitmap);
+    assertThatBitmap(actualBitmap).isDarkerThanByRatio(bitmap, 1.3);
 
     return this;
   }
