@@ -271,11 +271,16 @@ public final class Falcon {
         continue;
       }
 
-      Activity dialogOwningActivity = owningActivity(viewRoot.context());
+      Activity dialogOwnerActivity = ownerActivity(viewRoot.context());
+      if (dialogOwnerActivity == null) {
+        // make sure we will never compare null == null
+        return;
+      }
+
       for (int parentIndex = dialogIndex + 1; parentIndex < viewRoots.size(); parentIndex++) {
         ViewRootData possibleParent = viewRoots.get(parentIndex);
         if (possibleParent.isActivityType()
-            && owningActivity(possibleParent.context()) == dialogOwningActivity) {
+            && ownerActivity(possibleParent.context()) == dialogOwnerActivity) {
           viewRoots.remove(possibleParent);
           viewRoots.add(dialogIndex, possibleParent);
 
@@ -285,7 +290,7 @@ public final class Falcon {
     }
   }
 
-  private static Activity owningActivity(Context context) {
+  private static Activity ownerActivity(Context context) {
     Context currentContext = context;
 
     while (currentContext != null) {
