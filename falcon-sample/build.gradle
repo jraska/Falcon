@@ -21,6 +21,8 @@ android {
     targetSdkVersion rootProject.ext.targetSdkVersion
     versionCode rootProject.ext.versionCode
     versionName rootProject.ext.version
+
+    buildConfigField('boolean', 'CI_BUILD', 'true'.equals(System.getenv("CI")).toString())
   }
 
   buildTypes {
@@ -51,6 +53,7 @@ android {
   defaultConfig {
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
+
 }
 
 dependencies {
