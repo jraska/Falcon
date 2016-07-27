@@ -53,6 +53,17 @@ public final class BitmapAssert extends AbstractAssert<BitmapAssert, Bitmap> {
     return isDarkerThanByRatio(bitmap, 1.001);
   }
 
+  public BitmapAssert isSameAs(Bitmap bitmap) {
+    double averageHsvValue = computeAverageHsvValue(bitmap);
+    double actualHsvValue = computeAverageHsvValue(actual);
+
+    if (Double.compare(averageHsvValue, actualHsvValue) != 0) {
+      failWithMessage("Bitmap is not same as actual");
+    }
+
+    return this;
+  }
+
   public BitmapAssert isDifferentThan(Bitmap bitmap) {
     double averageHsvValue = computeAverageHsvValue(bitmap);
     double actualHsvValue = computeAverageHsvValue(actual);
@@ -84,7 +95,7 @@ public final class BitmapAssert extends AbstractAssert<BitmapAssert, Bitmap> {
 
     double sum = 0;
     float[] hsv = new float[3];
-    int step = decideStep(bitmap);
+    int step = decideBitmapTraversalStep(bitmap);
 
     for (int i = 0, length = pixelColors.length; i < length; i += step) {
       Color.colorToHSV(pixelColors[i], hsv);
@@ -95,7 +106,7 @@ public final class BitmapAssert extends AbstractAssert<BitmapAssert, Bitmap> {
     return sum * step / pixelColors.length;
   }
 
-  private static int decideStep(Bitmap bitmap) {
+  private static int decideBitmapTraversalStep(Bitmap bitmap) {
     int countOfPixels = bitmap.getHeight() * bitmap.getWidth();
 
     if (countOfPixels < 640 * 480) {
