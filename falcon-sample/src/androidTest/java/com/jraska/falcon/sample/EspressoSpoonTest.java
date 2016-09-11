@@ -20,7 +20,6 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.*;
-import static com.jraska.falcon.sample.Assumptions.assumeNoCI;
 import static com.jraska.falcon.sample.Assumptions.assumeSpoonPermissions;
 import static com.jraska.falcon.sample.asserts.BitmapFileAssert.assertThatFile;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,7 +44,6 @@ public class EspressoSpoonTest {
 
   @Before
   public void before() throws Exception {
-    assumeNoCI();
     assumeSpoonPermissions();
   }
 

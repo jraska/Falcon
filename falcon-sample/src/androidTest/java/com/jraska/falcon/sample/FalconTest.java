@@ -15,7 +15,6 @@ import java.io.File;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static com.jraska.falcon.sample.Assumptions.assumeNoCI;
 import static com.jraska.falcon.sample.asserts.BitmapAssert.assertThatBitmap;
 import static com.jraska.falcon.sample.asserts.BitmapFileAssert.assertThatFile;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -87,8 +86,6 @@ public class FalconTest {
 
   @Test
   public void takesToastIntoScreenshot() {
-    assumeNoCI();
-
     SampleActivity activity = _activityRule.getActivity();
     Bitmap beforeToastBitmap = Falcon.takeScreenshotBitmap(activity);
     onView(withId(R.id.show_toast)).perform(click());
@@ -100,8 +97,6 @@ public class FalconTest {
 
   @Test
   public void takesDialogIntoScreenshot() {
-    assumeNoCI();
-
     SampleActivity activity = _activityRule.getActivity();
     Bitmap beforeToastBitmap = Falcon.takeScreenshotBitmap(activity);
     onView(withId(R.id.show_dialog)).perform(click());
@@ -113,8 +108,6 @@ public class FalconTest {
 
   @Test
   public void takesPopupIntoScreenshot() {
-    assumeNoCI();
-
     SampleActivity activity = _activityRule.getActivity();
     Bitmap beforePopupBitmap = Falcon.takeScreenshotBitmap(activity);
     onView(withId(R.id.show_popup)).perform(click());

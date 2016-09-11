@@ -12,7 +12,6 @@ import static android.support.test.espresso.assertion.ViewAssertions.doesNotExis
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.jraska.falcon.sample.Assumptions.assumeNoCI;
 import static com.jraska.falcon.sample.asserts.BitmapAssert.assertThatBitmap;
 
 public class FalconDialogInOnCreateTest {
@@ -23,8 +22,6 @@ public class FalconDialogInOnCreateTest {
   // Tests https://github.com/jraska/Falcon/issues/11
   @Test
   public void takesDialogOnCreate() {
-    assumeNoCI();
-
     DialogOnCreate activity = _activityRule.getActivity();
     onView(withText(DialogOnCreate.DIALOG_TITLE)).check(matches(isDisplayed()));
 
