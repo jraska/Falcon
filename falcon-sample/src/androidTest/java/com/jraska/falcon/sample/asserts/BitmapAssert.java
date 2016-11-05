@@ -53,17 +53,6 @@ public final class BitmapAssert extends AbstractAssert<BitmapAssert, Bitmap> {
     return isDarkerThanByRatio(bitmap, 1.001);
   }
 
-  public BitmapAssert isSameAs(Bitmap bitmap) {
-    double averageHsvValue = computeAverageHsvValue(bitmap);
-    double actualHsvValue = computeAverageHsvValue(actual);
-
-    if (Double.compare(averageHsvValue, actualHsvValue) != 0) {
-      failWithMessage("Bitmap is not same as actual");
-    }
-
-    return this;
-  }
-
   public BitmapAssert isDifferentThan(Bitmap bitmap) {
     double averageHsvValue = computeAverageHsvValue(bitmap);
     double actualHsvValue = computeAverageHsvValue(actual);

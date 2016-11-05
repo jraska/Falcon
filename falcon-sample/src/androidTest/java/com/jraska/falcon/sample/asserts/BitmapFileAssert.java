@@ -43,11 +43,6 @@ public final class BitmapFileAssert extends FileAssert {
     return this;
   }
 
-  static double computeAverageHsvValue(File bitmapFile) {
-    Bitmap bitmap = loadSampledBitmap(bitmapFile);
-    return BitmapAssert.computeAverageHsvValue(bitmap);
-  }
-
   private static Bitmap loadSampledBitmap(File bitmapFile) {
     BitmapFactory.Options sampleImageOptions = new BitmapFactory.Options();
     sampleImageOptions.inSampleSize = 4;

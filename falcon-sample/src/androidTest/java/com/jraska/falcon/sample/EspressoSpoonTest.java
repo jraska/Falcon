@@ -1,8 +1,5 @@
 package com.jraska.falcon.sample;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import com.jraska.falcon.FalconSpoon;
@@ -72,34 +69,6 @@ public class EspressoSpoonTest {
     takenScreenshots.add(screenshotWithDialogFile);
 
     assertThatFile(screenshotWithDialogFile).isDarkerThan(screenshotWithoutDialogFile);
-  }
-
-  //endregion
-
-  //region Methods
-
-  private static double computeAverageHsvValue(File bitmapFile) {
-    BitmapFactory.Options sampleImageOptions = new BitmapFactory.Options();
-    sampleImageOptions.inSampleSize = 4;
-
-    Bitmap bitmap = BitmapFactory.decodeFile(bitmapFile.getAbsolutePath(), sampleImageOptions);
-    return computeAverageHsvValue(bitmap);
-  }
-
-  private static double computeAverageHsvValue(Bitmap bitmap) {
-    int[] pixelColors = new int[bitmap.getWidth() * bitmap.getHeight()];
-    bitmap.getPixels(pixelColors, 0, bitmap.getWidth(), 0, 0,
-        bitmap.getWidth(), bitmap.getHeight());
-
-    double sum = 0;
-    float[] hsv = new float[3];
-    for (int pixelColor : pixelColors) {
-      Color.colorToHSV(pixelColor, hsv);
-
-      sum += hsv[2];
-    }
-
-    return sum / pixelColors.length;
   }
 
   //endregion
