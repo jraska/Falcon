@@ -26,7 +26,7 @@ android {
 
 dependencies {
   compile project(':falcon')
-  compile 'com.squareup.spoon:spoon-client:1.6.2'
+  compile 'com.squareup.spoon:spoon-client:1.7.0'
 }
 
 ext {
