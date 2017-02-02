@@ -184,8 +184,6 @@ public final class Falcon {
 
   @SuppressWarnings("unchecked") // no way to check
   private static List<ViewRootData> getRootViews(Activity activity) {
-    List<ViewRootData> rootViews = new ArrayList<>();
-
     Object globalWindowManager;
     if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
       globalWindowManager = getFieldValue("mWindowManager", activity.getWindowManager());
@@ -209,6 +207,19 @@ public final class Falcon {
       params = (LayoutParams[]) paramsObject;
     }
 
+    List<ViewRootData> rootViews = viewRootData(roots, params);
+    if (rootViews.isEmpty()) {
+      return Collections.emptyList();
+    }
+
+    offsetRootsTopLeft(rootViews);
+    ensureDialogsAreAfterItsParentActivities(rootViews);
+
+    return rootViews;
+  }
+
+  private static List<ViewRootData> viewRootData(Object[] roots, LayoutParams[] params) {
+    List<ViewRootData> rootViews = new ArrayList<>();
     for (int i = 0; i < roots.length; i++) {
       Object root = roots[i];
 
@@ -217,6 +228,10 @@ public final class Falcon {
       // fixes https://github.com/jraska/Falcon/issues/10
       if (view == null) {
         Log.e(TAG, "null View stored as root in Global window manager, skipping");
+        continue;
+      }
+
+      if(!view.isShown()){
         continue;
       }
 
@@ -229,13 +244,6 @@ public final class Falcon {
 
       rootViews.add(new ViewRootData(view, area, params[i]));
     }
-
-    if (rootViews.isEmpty()) {
-      return Collections.emptyList();
-    }
-
-    offsetRootsTopLeft(rootViews);
-    ensureDialogsAreAfterItsParentActivities(rootViews);
 
     return rootViews;
   }

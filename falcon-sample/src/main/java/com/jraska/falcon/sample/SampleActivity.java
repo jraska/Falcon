@@ -21,6 +21,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 import com.jraska.falcon.Falcon;
 
 import java.io.File;
@@ -145,6 +146,12 @@ public class SampleActivity extends AppCompatActivity {
     };
 
     scheduleInSecond(counterCommand);
+  }
+
+  @OnLongClick(R.id.toolbar)
+  public boolean showExtraActivity() {
+    startActivity(new Intent(this, SampleActivity.class));
+    return true;
   }
 
   private void scheduleInSecond(Runnable command) {

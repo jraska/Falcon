@@ -77,6 +77,19 @@ public final class BitmapAssert extends AbstractAssert<BitmapAssert, Bitmap> {
     return this;
   }
 
+  public BitmapAssert isRotatedSize(Bitmap expected) {
+    isNotNull();
+    double actualSizesRatio = actual.getWidth() / (double) actual.getHeight();
+    double ratio = expected.getHeight() / (double) expected.getWidth();
+
+    if(Math.abs(ratio - actualSizesRatio) > 0.05){
+      failWithMessage("Bitmap with sizes<w=%s, h=%s>, is not rotated <w=%s, h=%s>",
+          actual.getWidth(), actual.getHeight(), expected.getWidth(), expected.getHeight());
+    }
+
+    return this;
+  }
+
   static double computeAverageHsvValue(Bitmap bitmap) {
     int[] pixelColors = new int[bitmap.getWidth() * bitmap.getHeight()];
     bitmap.getPixels(pixelColors, 0, bitmap.getWidth(), 0, 0,
