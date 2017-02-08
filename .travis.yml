@@ -14,7 +14,7 @@ before_script:
 android:
   components:
     - tools
-    - build-tools-24.0.1
+    - build-tools-25.0.2
     - android-24
     - platform-tools
 
