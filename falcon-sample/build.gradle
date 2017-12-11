@@ -6,12 +6,10 @@ buildscript {
   }
 
   dependencies {
-    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
   }
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
@@ -59,20 +57,20 @@ android {
 }
 
 dependencies {
-  compile project(':falcon')
+  implementation project(':falcon')
 
-  compile 'com.android.support:appcompat-v7:24.1.1'
-  compile 'com.android.support:design:24.1.1'
-  compile 'com.jakewharton:butterknife:8.2.1'
-  apt 'com.jakewharton:butterknife-compiler:8.2.1'
+  implementation 'com.android.support:appcompat-v7:24.1.1'
+  implementation 'com.android.support:design:24.1.1'
+  implementation 'com.jakewharton:butterknife:8.2.1'
+  annotationProcessor 'com.jakewharton:butterknife-compiler:8.2.1'
 
 
-  androidTestCompile project(':falcon-spoon-compat')
-  androidTestCompile 'org.assertj:assertj-core:1.7.1'
-  androidTestCompile 'com.android.support.test:runner:0.5'
-  androidTestCompile 'com.android.support.test:rules:0.5'
-  androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+  androidTestImplementation project(':falcon-spoon-compat')
+  androidTestImplementation 'org.assertj:assertj-core:1.7.1'
+  androidTestImplementation 'com.android.support.test:runner:0.5'
+  androidTestImplementation 'com.android.support.test:rules:0.5'
+  androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
 
   // separately set because of test runners older dependencies
-  androidTestCompile 'com.android.support:support-annotations:24.1.1'
+  androidTestImplementation 'com.android.support:support-annotations:24.1.1'
 }
