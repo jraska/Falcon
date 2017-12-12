@@ -2,7 +2,9 @@ package com.jraska.falcon.sample;
 
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import com.jraska.falcon.FalconSpoon;
+import com.jraska.falcon.FalconSpoonRule;
+import com.squareup.spoon.SpoonRule;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -33,6 +35,9 @@ public class EspressoSpoonTest {
   public ActivityTestRule<SampleActivity> _activityRule = new ActivityTestRule<>(
       SampleActivity.class);
 
+  @Rule
+  public final SpoonRule _spoonRule = new SpoonRule();
+
   private List<File> takenScreenshots = new ArrayList<>();
 
   //endregion
@@ -59,13 +64,13 @@ public class EspressoSpoonTest {
   public void dialogTakenInScreenshot() throws Exception {
     SampleActivity activity = _activityRule.getActivity();
 
-    File screenshotWithoutDialogFile = FalconSpoon.screenshot(activity, "No_dialog");
+    File screenshotWithoutDialogFile = FalconSpoonRule.screenshot(_spoonRule, activity, "No_dialog");
     takenScreenshots.add(screenshotWithoutDialogFile);
 
     onView(withId(R.id.show_dialog)).perform(click());
     onView(withText("Screenshot")).check(matches(isDisplayed()));
 
-    File screenshotWithDialogFile = FalconSpoon.screenshot(activity, "Dialog_test");
+    File screenshotWithDialogFile = FalconSpoonRule.screenshot(_spoonRule, activity, "Dialog_test");
     takenScreenshots.add(screenshotWithDialogFile);
 
     assertThatFile(screenshotWithDialogFile).isDarkerThan(screenshotWithoutDialogFile);
