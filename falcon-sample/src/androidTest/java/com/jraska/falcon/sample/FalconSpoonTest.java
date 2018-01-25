@@ -2,8 +2,8 @@ package com.jraska.falcon.sample;
 
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+
 import com.jraska.falcon.FalconSpoonRule;
-import com.squareup.spoon.SpoonRule;
 
 import org.junit.After;
 import org.junit.Before;
@@ -30,7 +30,7 @@ public class FalconSpoonTest {
       SampleActivity.class);
 
   @Rule
-  public final SpoonRule _spoonRule = new SpoonRule();
+  public final FalconSpoonRule _falconSpoonRule = new FalconSpoonRule();
 
   private File _screenshotFile;
 
@@ -57,7 +57,7 @@ public class FalconSpoonTest {
   @Test
   public void takesScreenshotToFile() throws Exception {
     String tag = "ExampleScreenshot";
-    _screenshotFile = FalconSpoonRule.screenshot(_spoonRule, _activityRule.getActivity(), tag);
+    _screenshotFile = _falconSpoonRule.screenshot(_activityRule.getActivity(), tag);
 
     assertThat(_screenshotFile.length()).isGreaterThan(0L);
     assertThatFile(_screenshotFile).isBitmap();
