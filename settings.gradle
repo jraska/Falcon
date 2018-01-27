@@ -1,1 +1,1 @@
-include ':falcon-sample', ':falcon', ':falcon-spoon-compat', ':spoon-client'
+include ':falcon-sample', ':falcon', ':falcon-spoon-compat'

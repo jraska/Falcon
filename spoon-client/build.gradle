@@ -1,2 +1,0 @@
-configurations.maybeCreate("default")
-artifacts.add("default", file('spoon-client-2.0.0-20171128.164926-39.aar'))
