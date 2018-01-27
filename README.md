@@ -25,7 +25,7 @@ Check falcon-sample and its android tests for more example usage.
 
 Grab via Gradle:
 ```groovy
-compile 'com.jraska:falcon:1.0.4'
+compile 'com.jraska:falcon:2.0.0'
 ```
 
 ## Spoon Compat
@@ -34,17 +34,32 @@ compile 'com.jraska:falcon:1.0.4'
 To keep using Spoon with advantage of Falcon you can use `FalconSpoon` class.
 
 #### Usage of Spoon Compat
-```java
-// Screenshot with tag
-File screenshot = FalconSpoon.screenshot(activity, tag);
-// Screenshot with own test class and method name
-File screenshot = FalconSpoon.screenshot(activity, tag, testClassName, testMethodName);
-```
 
+```java
+@Rule
+public final FalconSpoonRule falconSpoonRule = new FalconSpoonRule();
+
+@Test
+public void awesomeTest() {
+  ...
+  File screenshot = FalconSpoonRule.screenshot(activity, tag);
+  ...
+}
+```
 #### Gradle
 ```groovy
+androidTestCompile 'com.jraska:falcon-spoon-compat:2.0.0'
+```
+
+
+#### Spoon 1.X Compatibility
+
+Spoon version 2.0 is not released yet, so if you use version 1.X use Falcon 1.0.4.
+```groovy
+androidTestCompile 'com.jraska:falcon:1.0.4'
 androidTestCompile 'com.jraska:falcon-spoon-compat:1.0.4'
 ```
+
 
 ## Q&A
 
