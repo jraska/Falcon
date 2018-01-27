@@ -5,13 +5,12 @@ android:
   components:
     - tools
     - platform-tools
+    - tools
     - build-tools-27.0.2
     - android-27
 
-    - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
-    - addon-google_apis-google-27
 
 notifications:
   email: false
