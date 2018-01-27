@@ -17,6 +17,7 @@ android:
     - platform-tools
     - build-tools-27.0.2
     - android-27
+    - addon
 
     - sys-img-armeabi-v7a-android-27
 
