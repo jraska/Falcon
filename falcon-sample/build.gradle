@@ -51,6 +51,10 @@ android {
     abortOnError true
   }
 
+  adbOptions {
+    installOptions "-g"
+  }
+
   defaultConfig {
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
