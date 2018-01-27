@@ -1,13 +1,9 @@
 language: android
-
-jdk:
-  - oraclejdk8
-
-sudo: required
-dist: trusty
-group: deprecated-2017Q4
+jdk: oraclejdk8
 
 before_script:
+  - android list targets
+  - jdk_switcher use oraclejdk8
   - echo no | android create avd --force -n test -t android-27 --abi armeabi-v7a
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
@@ -19,6 +15,7 @@ android:
   components:
     - tools
     - platform-tools
+    - tools
     - build-tools-27.0.2
     - android-27
     - addon
