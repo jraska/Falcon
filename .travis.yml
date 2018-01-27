@@ -15,5 +15,8 @@ android:
 before_install:
   - yes | sdkmanager "platforms;android-27"
 
+script:
+  - ./gradlew build
+
 notifications:
   email: false
