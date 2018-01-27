@@ -2,6 +2,10 @@ apply plugin: 'com.android.library'
 
 version = rootProject.ext.version
 
+repositories {
+  jcenter()
+}
+
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
   buildToolsVersion rootProject.ext.buildToolsVersion
@@ -20,14 +24,15 @@ android {
 
   lintOptions {
     abortOnError true
-    disable 'UnusedAttribute'
+    disable 'UnusedAttribute', 'InvalidPackage'
   }
 }
 
 dependencies {
-  implementation 'com.android.support.test:rules:0.5'
+  implementation 'com.android.support.test:rules:1.0.1'
   implementation project(':falcon')
-  api project(':spoon-client')
+  api "com.squareup.spoon:spoon-client:2.0.0-SNAPSHOT"
+  api 'junit:junit:4.12'
 }
 
 ext {

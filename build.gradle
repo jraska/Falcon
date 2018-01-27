@@ -8,7 +8,7 @@ buildscript {
   dependencies {
     classpath 'com.android.tools.build:gradle:3.0.1'
     classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
-    classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
+    classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
   }
 }
 
@@ -16,16 +16,17 @@ allprojects {
   repositories {
     jcenter()
     google()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" } // For Spoon snapshot, until 2.0.0 is released
   }
 }
 
 ext {
-  version = '1.0.4'
-  versionCode = 10
-  minSdkVersion = 10
-  compileSdkVersion = 24
+  version = '2.0.0-SNAPSHOT'
+  versionCode = 11
+  minSdkVersion = 14
+  compileSdkVersion = 27
   targetSdkVersion = compileSdkVersion
-  buildToolsVersion = '26.0.2'
+  buildToolsVersion = '27.0.2'
   sourceCompatibility = JavaVersion.VERSION_1_7
 }
 

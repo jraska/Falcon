@@ -1,6 +1,7 @@
 package com.jraska.falcon.sample;
 
 import android.support.test.rule.ActivityTestRule;
+import android.support.test.rule.GrantPermissionRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.jraska.falcon.FalconSpoonRule;
@@ -13,7 +14,9 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 
-import static com.jraska.falcon.sample.Assumptions.assumeSpoonPermissions;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static android.support.test.rule.GrantPermissionRule.grant;
 import static com.jraska.falcon.sample.asserts.BitmapFileAssert.assertThatFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,16 +35,14 @@ public class FalconSpoonTest {
   @Rule
   public final FalconSpoonRule _falconSpoonRule = new FalconSpoonRule();
 
+  @Rule
+  public final GrantPermissionRule permissionRule = grant(READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE);
+
   private File _screenshotFile;
 
   //endregion
 
   //region Setup Methods
-
-  @Before
-  public void before() throws Exception {
-    assumeSpoonPermissions();
-  }
 
   @After
   public void after() throws Exception {
