@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static android.graphics.Bitmap.Config.ARGB_8888;
 import static android.view.WindowManager.LayoutParams.FLAG_DIM_BEHIND;
@@ -124,22 +125,35 @@ public final class Falcon {
     if (Looper.myLooper() == Looper.getMainLooper()) {
       drawRootsToBitmap(viewRoots, bitmap);
     } else {
-      final CountDownLatch latch = new CountDownLatch(1);
-      activity.runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-          try {
-            drawRootsToBitmap(viewRoots, bitmap);
-          } finally {
-            latch.countDown();
-          }
-        }
-      });
-
-      latch.await();
+      drawRootsToBitmapOtherThread(activity, viewRoots, bitmap);
     }
 
     return bitmap;
+  }
+
+  private static void drawRootsToBitmapOtherThread(Activity activity, final List<ViewRootData> viewRoots,
+                                                   final Bitmap bitmap) throws InterruptedException {
+    final AtomicReference<Exception> errorInMainThread = new AtomicReference<>();
+    final CountDownLatch latch = new CountDownLatch(1);
+    activity.runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        try {
+          drawRootsToBitmap(viewRoots, bitmap);
+        } catch (Exception ex) {
+          errorInMainThread.set(ex);
+        } finally {
+          latch.countDown();
+        }
+      }
+    });
+
+    latch.await();
+
+    Exception exception = errorInMainThread.get();
+    if(exception != null){
+      throw new UnableToTakeScreenshotException(exception);
+    }
   }
 
   private static void drawRootsToBitmap(List<ViewRootData> viewRoots, Bitmap bitmap) {
@@ -183,7 +197,7 @@ public final class Falcon {
   }
 
   @SuppressWarnings("unchecked") // no way to check
-  private static List<ViewRootData> getRootViews(Activity activity) {
+  static List<ViewRootData> getRootViews(Activity activity) {
     Object globalWindowManager;
     if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
       globalWindowManager = getFieldValue("mWindowManager", activity.getWindowManager());
@@ -332,7 +346,7 @@ public final class Falcon {
     return field.get(target);
   }
 
-  private static Field findField(String name, Class clazz) throws NoSuchFieldException {
+  static Field findField(String name, Class clazz) throws NoSuchFieldException {
     Class currentClass = clazz;
     while (currentClass != Object.class) {
       for (Field field : currentClass.getDeclaredFields()) {
@@ -389,8 +403,8 @@ public final class Falcon {
     }
   }
 
-  private static class ViewRootData {
-    private final View _view;
+  static class ViewRootData {
+    final View _view;
     private final Rect _winFrame;
     private final LayoutParams _layoutParams;
 
