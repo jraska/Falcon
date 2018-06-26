@@ -48,6 +48,7 @@ public void awesomeTest() {
 ```
 #### Gradle
 ```groovy
+androidTestCompile 'com.jraska:falcon:2.0.1'
 androidTestCompile 'com.jraska:falcon-spoon-compat:2.0.1'
 ```
 

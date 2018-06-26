@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-  implementation 'com.android.support.test:rules:1.0.1'
+  implementation 'com.android.support.test:rules:1.0.2'
   implementation project(':falcon')
   api "com.squareup.spoon:spoon-client:2.0.0-SNAPSHOT"
   api 'junit:junit:4.12'
