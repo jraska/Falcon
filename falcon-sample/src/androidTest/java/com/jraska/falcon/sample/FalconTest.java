@@ -31,7 +31,7 @@ public class FalconTest {
 
   @Rule
   public ActivityTestRule<SampleActivity> _activityRule = new ActivityTestRule<>(
-      SampleActivity.class);
+    SampleActivity.class);
 
   private File _screenshotFile;
 
@@ -40,7 +40,7 @@ public class FalconTest {
   //region Setup Methods
 
   @After
-  public void after() throws Exception {
+  public void after() {
     if (_screenshotFile != null) {
       assertThat(_screenshotFile.delete()).isTrue();
     }
@@ -51,7 +51,7 @@ public class FalconTest {
   //region Test methods
 
   @Test
-  public void takesScreenshotToFile() throws Exception {
+  public void takesScreenshotToFile() {
     SampleActivity activity = _activityRule.getActivity();
     File newFile = activity.getScreenshotFile();
     _screenshotFile = newFile;
@@ -65,7 +65,7 @@ public class FalconTest {
   }
 
   @Test
-  public void takesScreenshotToBitmap() throws Exception {
+  public void takesScreenshotToBitmap() {
     Bitmap bitmap = Falcon.takeScreenshotBitmap(_activityRule.getActivity());
 
     assertThat(bitmap).isNotNull();
@@ -92,7 +92,7 @@ public class FalconTest {
 
     Bitmap withToastBitmap = Falcon.takeScreenshotBitmap(activity);
 
-    assertThatBitmap(withToastBitmap).isDarkerThan(beforeToastBitmap);
+    assertThatBitmap(withToastBitmap).isDifferentThan(beforeToastBitmap);
   }
 
   @Test
