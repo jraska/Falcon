@@ -22,6 +22,8 @@ public class FalconDialogInOnCreateTest {
   // Tests https://github.com/jraska/Falcon/issues/11
   @Test
   public void takesDialogOnCreate() {
+    Assumptions.assumePlatformHasDialogIssue();
+
     DialogOnCreate activity = _activityRule.getActivity();
     onView(withText(DialogOnCreate.DIALOG_TITLE)).check(matches(isDisplayed()));
 

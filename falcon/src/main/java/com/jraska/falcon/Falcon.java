@@ -237,26 +237,26 @@ public final class Falcon {
     for (int i = 0; i < roots.length; i++) {
       Object root = roots[i];
 
-      View view = (View) getFieldValue("mView", root);
+      View rootView = (View) getFieldValue("mView", root);
 
       // fixes https://github.com/jraska/Falcon/issues/10
-      if (view == null) {
+      if (rootView == null) {
         Log.e(TAG, "null View stored as root in Global window manager, skipping");
         continue;
       }
 
-      if(!view.isShown()){
+      if(!rootView.isShown()){
         continue;
       }
 
-      Object attachInfo = getFieldValue("mAttachInfo", root);
-      int top = (int) getFieldValue("mWindowTop", attachInfo);
-      int left = (int) getFieldValue("mWindowLeft", attachInfo);
+      int[] location = new int[2];
+      rootView.getLocationOnScreen(location);
 
-      Rect winFrame = (Rect) getFieldValue("mWinFrame", root);
-      Rect area = new Rect(left, top, left + winFrame.width(), top + winFrame.height());
+      int left = location[0];
+      int top = location[1];
+      Rect area = new Rect(left, top, left + rootView.getWidth(), top + rootView.getHeight());
 
-      rootViews.add(new ViewRootData(view, area, params[i]));
+      rootViews.add(new ViewRootData(rootView, area, params[i]));
     }
 
     return rootViews;
