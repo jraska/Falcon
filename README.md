@@ -64,6 +64,10 @@ androidTestCompile 'com.jraska:falcon-spoon-compat:1.0.4'
 
 ## Q&A
 
+*Why is Falcon crashing on Android 9 Pie?*
+
+You are most likely not using the latest version of Falcon. Android 9 is supported from Falcon version `2.1.0`. Some changes were needed since we use some reflection to make the screenshots possible.
+
 *Why another screenshot library?*
 
 There are plenty of great screenshot libraries, but all of them miss Dialogs, Toasts and other extra windows in Activity. Not this one!
