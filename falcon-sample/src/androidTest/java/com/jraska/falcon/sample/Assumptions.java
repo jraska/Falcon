@@ -14,7 +14,4 @@ public final class Assumptions {
     return BuildConfig.CI_BUILD;
   }
 
-  public static void assumePlatformHasDialogIssue() {
-    Assume.assumeTrue(Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT);
-  }
 }

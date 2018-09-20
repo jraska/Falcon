@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 
 public class DialogOnCreate extends AppCompatActivity {
   public static final String DIALOG_TITLE = "Title";
+  public static final String DIALOG_MESSAGE = "Message";
+  public static final String DIALOG_POSITIVE_BUTTON = "OK";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -14,6 +16,8 @@ public class DialogOnCreate extends AppCompatActivity {
 
     new AlertDialog.Builder(this)
         .setTitle(DIALOG_TITLE)
+        .setMessage(DIALOG_MESSAGE)
+        .setPositiveButton(DIALOG_POSITIVE_BUTTON, null)
         .show();
   }
 }

@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Build;
+import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
@@ -293,8 +294,7 @@ public final class Falcon {
         continue;
       }
 
-      Activity dialogOwnerActivity = ownerActivity(viewRoot.context());
-      if (dialogOwnerActivity == null) {
+      if (viewRoot.getWindowToken() == null) {
         // make sure we will never compare null == null
         return;
       }
@@ -302,7 +302,7 @@ public final class Falcon {
       for (int parentIndex = dialogIndex + 1; parentIndex < viewRoots.size(); parentIndex++) {
         ViewRootData possibleParent = viewRoots.get(parentIndex);
         if (possibleParent.isActivityType()
-            && ownerActivity(possibleParent.context()) == dialogOwnerActivity) {
+            && possibleParent.getWindowToken() == viewRoot.getWindowToken()) {
           viewRoots.remove(possibleParent);
           viewRoots.add(dialogIndex, possibleParent);
 
@@ -310,24 +310,6 @@ public final class Falcon {
         }
       }
     }
-  }
-
-  private static Activity ownerActivity(Context context) {
-    Context currentContext = context;
-
-    while (currentContext != null) {
-      if (currentContext instanceof Activity) {
-        return (Activity) currentContext;
-      }
-
-      if (currentContext instanceof ContextWrapper && !(currentContext instanceof Application)) {
-        currentContext = ((ContextWrapper) currentContext).getBaseContext();
-      } else {
-        break;
-      }
-    }
-
-    return null;
   }
 
   private static Object getFieldValue(String fieldName, Object target) {
@@ -420,6 +402,10 @@ public final class Falcon {
 
     boolean isActivityType() {
       return _layoutParams.type == LayoutParams.TYPE_BASE_APPLICATION;
+    }
+
+    IBinder getWindowToken() {
+      return _layoutParams.token;
     }
 
     Context context() {
