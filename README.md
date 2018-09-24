@@ -25,7 +25,7 @@ Check falcon-sample and its android tests for more example usage.
 
 Grab via Gradle:
 ```groovy
-compile 'com.jraska:falcon:2.1.0'
+compile 'com.jraska:falcon:2.1.1'
 ```
 
 ## Spoon Compat
@@ -48,8 +48,8 @@ public void awesomeTest() {
 ```
 #### Gradle
 ```groovy
-androidTestCompile 'com.jraska:falcon:2.1.0'
-androidTestCompile 'com.jraska:falcon-spoon-compat:2.1.0'
+androidTestCompile 'com.jraska:falcon:2.1.1'
+androidTestCompile 'com.jraska:falcon-spoon-compat:2.1.1'
 ```
 
 
