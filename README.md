@@ -1,3 +1,6 @@
+### JCenter Update
+- Falcon is currently published on JCenter - it will serve packages [until February 1st 2022](https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/). Falcon packages will be migrated to Maven Central before that - [see issue](https://github.com/jraska/Falcon/issues/52). Thanks for using Falcon! :) 
+
 # Falcon
 **Take Android screenshots with Falcons bright eye!**
 
