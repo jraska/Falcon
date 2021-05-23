@@ -1,20 +1,16 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
   repositories {
-    jcenter()
+    mavenCentral()
     google()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.2.1'
-    classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
-    classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+    classpath 'com.android.tools.build:gradle:4.2.1'
   }
 }
 
 allprojects {
   repositories {
-    jcenter()
+    mavenCentral()
     google()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" } // For Spoon snapshot, until 2.0.0 is released
   }
@@ -24,10 +20,9 @@ ext {
   version = '2.1.1'
   versionCode = 14
   minSdkVersion = 14
-  compileSdkVersion = 28
+  compileSdkVersion = 30
   targetSdkVersion = compileSdkVersion
-  buildToolsVersion = '28.0.2'
-  sourceCompatibility = JavaVersion.VERSION_1_7
+  sourceCompatibility = JavaVersion.VERSION_1_8
 }
 
 task clean(type: Delete) {

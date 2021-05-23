@@ -4,7 +4,6 @@ version = rootProject.ext.version
 
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
-  buildToolsVersion rootProject.ext.buildToolsVersion
 
   defaultConfig {
     minSdkVersion rootProject.ext.minSdkVersion
@@ -50,6 +49,3 @@ ext {
   licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
   allLicenses = ["Apache-2.0"]
 }
-
-apply from: rootDir.absolutePath + '/gradle/installv1.gradle'
-apply from: rootDir.absolutePath + '/gradle/bintrayv1.gradle'
