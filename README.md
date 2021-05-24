@@ -43,7 +43,7 @@ You are most likely not using the latest version of Falcon. Android 9 is support
 
 ## Spoon Compat - Deprecated
 
-[Here](https://github.com/jraska/Falcon/tree/2.1.1#spoon-compat) you can find the instructions to use [Falcon 2.1.1](https://github.com/jraska/Falcon/tree/2.1.1#spoon-compat) with [Spoon](https://github.com/square/spoon). Spoon Compat support was discontinued as [Spoon](https://github.com/square/spoon) was [last released in 2017](https://github.com/square/spoon/releases. The Spoon Compat artifacts are present on jcenter only.
+[Here](https://github.com/jraska/Falcon/tree/2.1.1#spoon-compat) you can find the instructions to use [Falcon 2.1.1](https://github.com/jraska/Falcon/tree/2.1.1#spoon-compat) with [Spoon](https://github.com/square/spoon). Spoon Compat support was discontinued as [Spoon](https://github.com/square/spoon) was [last released in 2017](https://github.com/square/spoon/releases). The Spoon Compat artifacts are present on jcenter only.
 
 ## License
 
