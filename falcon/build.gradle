@@ -1,6 +1,9 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
 version = rootProject.ext.version
+group = 'com.jraska'
 
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
@@ -26,26 +29,62 @@ android {
 dependencies {
 }
 
-ext {
-  bintrayRepo = 'maven'
-  bintrayName = 'com.jraska:falcon'
+task sourcesJar(type: Jar) {
+  from android.sourceSets.main.java.srcDirs
+  archiveClassifier = 'sources'
+}
 
-  publishedGroupId = 'com.jraska'
-  libraryName = 'Falcon'
-  artifact = 'falcon'
+artifacts {
+  archives sourcesJar
+}
 
-  libraryDescription = 'Better Android screenshots'
+afterEvaluate {
+  publishing {
+    publications {
+      release(MavenPublication) {
+        groupId 'com.jraska'
+        artifactId 'falcon'
+        version rootProject.ext.version
 
-  siteUrl = 'https://github.com/jraska/Falcon'
-  gitUrl = 'https://github.com/jraska/Falcon.git'
+        from components.release
+        artifact sourcesJar
 
-  libraryVersion = version
+        pom {
+          name = 'com.jraska'
+          description = 'Better Android screenshots'
+          url = 'https://github.com/jraska/Falcon'
+          licenses {
+            license {
+              name = 'The Apache Software License, Version 2.0'
+              url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            }
+          }
+          developers {
+            developer {
+              id = 'jraska'
+              name = 'Josef Raska'
+              email = 'josef.raska@gmail.com'
+            }
+          }
 
-  developerId = 'jraska'
-  developerName = 'Josef Raska'
-  developerEmail = 'josef.raska@gmail.com'
+          // Version control info - if you're using GitHub, follow the
+          // format as seen here
+          scm {
+            connection = 'scm:git:github.com/jraska/Falcon.git'
+            developerConnection = 'scm:git:ssh://github.com/jraska/Falcon.git'
+            url = 'https://github.com/getstream/stream-chat-android/tree/main'
+          }
+        }
+      }
+    }
+  }
+}
 
-  licenseName = 'The Apache Software License, Version 2.0'
-  licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-  allLicenses = ["Apache-2.0"]
+// Adding these directly into signing {} below didn't work :idk
+ext["signing.keyId"] = System.getenv("SIGNING_KEY_ID")
+ext["signing.password"] = System.getenv("SIGNING_KEY_PASSWORD")
+ext["signing.secretKeyRingFile"] = "$buildDir/signing-key.gpg"
+
+signing {
+  sign publishing.publications
 }
