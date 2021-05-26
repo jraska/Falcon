@@ -3,7 +3,7 @@
 
 *Includes dialogs, toasts and all other extra windows in your screenshot.*
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jraska/falcon/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jraska/falcon)
+[![Maven Central](https://img.shields.io/maven-central/v/com.jraska/falcon.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.jraska%22%20AND%20a:%22falcon%22)
 [![Sample](https://img.shields.io/badge/Download-Sample-blue.svg)](https://drive.google.com/file/d/0B0T1YjC17C-rQ25taHBXSXE2Uzg/view?usp=sharing)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green.svg) ](https://github.com/jraska/Falcon/blob/master/LICENSE)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Falcon-green.svg?style=true)](https://android-arsenal.com/details/1/2793)
