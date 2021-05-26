@@ -63,7 +63,6 @@ afterEvaluate {
             developer {
               id = 'jraska'
               name = 'Josef Raska'
-              email = 'josef.raska@gmail.com'
             }
           }
 
@@ -72,7 +71,7 @@ afterEvaluate {
           scm {
             connection = 'scm:git:github.com/jraska/Falcon.git'
             developerConnection = 'scm:git:ssh://github.com/jraska/Falcon.git'
-            url = 'https://github.com/getstream/stream-chat-android/tree/main'
+            url = 'https://github.com/jraska/Falcon/tree/main'
           }
         }
       }
