@@ -13,9 +13,9 @@
 
 ```java
 // Saving screenshot to file
-Falcon.takeScreenshot(activity, file);
+Falcon.takeScreenshot(activity, file)
 // Take bitmap and do whatever you want
-Bitmap bitmap = Falcon.takeScreenshotBitmap(activity);
+val bitmap = Falcon.takeScreenshotBitmap(activity)
 ```
 
 Check falcon-sample and its android tests for more example usage.
